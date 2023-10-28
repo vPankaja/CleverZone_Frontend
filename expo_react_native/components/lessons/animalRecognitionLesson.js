@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-export default class TextRecognitionLesson extends Component {
+export default class AnimalRecognitionLesson extends Component {
   state = {
     isModalVisible: false,
     question: "",
@@ -34,7 +34,7 @@ export default class TextRecognitionLesson extends Component {
             color="white"
             onPress={this.handleBack}
           />
-          <Text style={styles.headerText}>Micro Biology</Text>
+          <Text style={styles.headerText}>Zoology</Text>
           <View style={styles.rightHeader}>
             <Icon
               name="ellipsis-v"
@@ -47,7 +47,7 @@ export default class TextRecognitionLesson extends Component {
         <View style={styles.container}>
           <View style={styles.leftContainer}>
             <Text style={[styles.text, styles.textUp]}>
-              Explore the wonders of Micro Biology through our precise lessons and
+              Explore the wonders of Zoology through our precise lessons and
               accelerate your understanding.
             </Text>
           </View>
@@ -66,61 +66,59 @@ export default class TextRecognitionLesson extends Component {
           <TouchableOpacity
             onPress={() =>
               this.showModal(
-                "Microbiology?",
-                "Microbiology is the study of all living organisms that are too small to be visible with the naked eye. This includes bacteria, archaea, viruses, fungi, prions, protozoa and algae, collectively known as 'microbes'.",
-                require("../../assets/microbio.jpg")
+                "Zoology ?",
+                "Zoology, branch of biology that studies the members of the animal kingdom and animal life in general.",
+                require("../../assets/animalclassify.jpg")
               )
             }
           >
-            <Text style={styles.questionText}>Define Microbiology. </Text>
+            <Text style={styles.questionText}>Define Zoology. </Text>
           </TouchableOpacity>
           {/* Add more questions here */}
           <TouchableOpacity
             onPress={() =>
               this.showModal(
-                "Forms of Bacteria ",
-                "1. Spherical- Cocci 2. Rod-shaped- Bacilli 3. Spiral bacteria 4. Comma shaped- Vibrio",
-                require("../../assets/forms.jpg")
+                "Characteristics of Kingdom Animalia.",
+                "The animal kingdom is the largest kingdom with over 1 million known species. They are multicellular, eukaryotic organisms, which have no cell walls. They have tissues, organs, and organ systems. They are heterotrophs, which means they must eat other organisms to obtain nutrients. Some show radial or bilateral symmetry"
               )
             }
           >
             <Text style={styles.questionText}>
-              Bacterial is a type of Micro- organism having different
-              morphological forms.{" "}
+              Characteristics of Kingdom Animalia.{" "}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() =>
               this.showModal(
-                "Structure of a Virus.",
-                "In the simpler viruses the virion consists of a single molecule of nucleic acid surrounded by a protein coat, the capsid; the capsid and its enclosed nucleic acid together constitute the nucleocapsid.",
-                require("../../assets/virus.jpg")
+                "Phylum Cnidaria.",
+                "Majority are marine, except a few fresh water species. some are microscopic, while some are large like jelly fish.",
+                require("../../assets/Cnidaria.png")
               )
             }
           >
-            <Text style={styles.questionText}> Structure of a Virus.</Text>
+            <Text style={styles.questionText}> Phylum Cnidaria.</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() =>
               this.showModal(
-                "Cynobacteria.",
-                "Cyanobacteria, also called Cyanobacteriota or Cyanophyta, are a phylum of gram-negative bacteria that obtain energy via photosynthesis",
-                require("../../assets/cyno.jpg")
+                "Phylum Platyhelminthes.",
+                "The flatworms, flat worms, Platyhelminthes, or platyhelminths are a phylum of relatively simple bilaterian, unsegmented, soft-bodied invertebrates.",
+                require("../../assets/plathy.jpg")
               )
             }
           >
-            <Text style={styles.questionText}>Cynobacteria.</Text>
+            <Text style={styles.questionText}>Phylum Platyhelminthes.</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() =>
               this.showModal(
-                "Application of Microbes.",
-                "The fertilisation of the land, the production of fodder for cattle, compost heaps. These are all traditional applications of microbes on the farm. Without microbes, plants grow badly or not at all, and agriculture would be impossible. We use microbes more and more frequently to increase crop yields.",
-                require("../../assets/uses.png")
+                "Phylum Chordata.",
+                "A chordate is a deuterostomic animal belonging to the phylum Chordata. All chordates possess, at some point during their larval or adult stages, five distinctive physical characteristics that distinguish them from other taxa..",
+                require("../../assets/chordate.png")
               )
             }
           >
-            <Text style={styles.questionText}>Applications of Microbes.</Text>
+            <Text style={styles.questionText}>Phylum Chordata.</Text>
           </TouchableOpacity>
         </View>
 
