@@ -1,0 +1,12 @@
+export const screenNames = {
+    WELCOME: 'WELCOME',
+    LOGIN: 'LOGIN',
+    REGISTER: 'REGISTER',
+    HUMAN_BODY: 'HUMAN_BODY',
+    TEXT_RECOGNITION: 'TEXT_RECOGNITION',
+    ANIMAL: 'ANIMAL',
+    DASHBOARD: 'DASHBOARD',
+    RESULTS:"RESULTS",
+    CHAT:"CHAT",
+
+};
