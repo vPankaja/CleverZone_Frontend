@@ -1,37 +1,75 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {NavigationContainer} from '@react-navigation/native';
-import { stackNames } from '../constants/navConsts/stackNames';
-import AuthStack from './stacks/authStack';
-import { navConfig } from './navigatinConfigs';
-import Tabs from './tabNavigation';
-
+import { View, Text } from "react-native";
+import React from "react";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NavigationContainer } from "@react-navigation/native";
+import { stackNames } from "../constants/navConsts/stackNames";
+import AuthStack from "./stacks/authStack";
+import { navConfig } from "./navigatinConfigs";
+import Tabs from "./tabNavigation";
+import DashBoard from "../components/DashBoard";
+import HumanBodyParts from "../components/HumanBodyParts";
+import AnimalRecognition from "../components/AnimalRecognition";
+import TextRecognition from "../components/TextRecognition";
+import TextRecognitionLesson from "../components/lessons/textRecognitionLesson";
 
 const RootNavigation = () => {
-    const RootStackNav = createNativeStackNavigator();
+  const RootStackNav = createNativeStackNavigator();
 
   return (
     <NavigationContainer>
-    <RootStackNav.Navigator>
-    <RootStackNav.Screen
+      <RootStackNav.Navigator>
+        <RootStackNav.Screen
           name={stackNames.AUTH}
           component={AuthStack}
           options={{
             headerShown: false,
           }}
         />
-          <RootStackNav.Screen
+        <RootStackNav.Screen
           name={stackNames.TABS}
           component={Tabs}
           options={{
             headerShown: false,
           }}
         />
-   
-    </RootStackNav.Navigator>
+        <RootStackNav.Screen
+          name="HumanBodyParts"
+          component={HumanBodyParts}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <RootStackNav.Screen
+          name="Dashboard"
+          component={DashBoard}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <RootStackNav.Screen
+          name="AnimalRecognition"
+          component={AnimalRecognition}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <RootStackNav.Screen
+          name="TextRecognition"
+          component={TextRecognition}
+          options={{
+            headerShown: false,
+          }}
+        />
+            <RootStackNav.Screen
+          name="TextRecognitionLesson"
+          component={TextRecognitionLesson}
+          options={{
+            headerShown: false,
+          }}
+        />
+      </RootStackNav.Navigator>
     </NavigationContainer>
-  )
-}
+  );
+};
 
-export default RootNavigation
+export default RootNavigation;

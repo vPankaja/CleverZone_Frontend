@@ -15,6 +15,8 @@ import Slideshow from "./SlideShow";
 import { screenNames } from "../constants/navConsts/screenNames";
 import { scale } from "react-native-size-matters";
 import BottomSheet from "@gorhom/bottom-sheet";
+import Icon from "react-native-vector-icons/FontAwesome";
+
 export default class DashBoard extends React.Component {
   constructor(props) {
     super(props);
@@ -477,7 +479,7 @@ export default class DashBoard extends React.Component {
             borderTopLeftRadius: 26,
             borderTopRightRadius: 26,
             borderWidth: 1,
-            borderColor: "red",
+            borderColor: "black",
           }}
         >
           {/* Anatomy Bottom Sheet Content */}
@@ -507,7 +509,11 @@ export default class DashBoard extends React.Component {
                   marginHorizontal: 27,
                 }}
               >
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() =>
+                    this.props.navigation.navigate("HumanBodyParts")
+                  }
+                >
                   <View
                     style={{
                       backgroundColor: "#1C4C4E",
@@ -519,7 +525,13 @@ export default class DashBoard extends React.Component {
                       justifyContent: "center",
                     }}
                   >
-                    <Text>Scan Now</Text>
+                    <Icon
+                      name="camera"
+                      size={20}
+                      style={{ marginRight: 5 }}
+                      color="#fff"
+                    />
+                    <Text style={{ color: "#fff" }}>Scan Now</Text>
                   </View>
                 </TouchableOpacity>
                 <TouchableOpacity>
@@ -534,7 +546,13 @@ export default class DashBoard extends React.Component {
                       justifyContent: "center",
                     }}
                   >
-                    <Text>Lessons</Text>
+                    <Icon
+                      name="book"
+                      size={20}
+                      style={{ marginRight: 5 }}
+                      color="#fff"
+                    />
+                    <Text style={{ color: "#fff" }}>Lessons</Text>
                   </View>
                 </TouchableOpacity>
               </View>
@@ -554,7 +572,7 @@ export default class DashBoard extends React.Component {
             borderTopLeftRadius: 26,
             borderTopRightRadius: 26,
             borderWidth: 1,
-            borderColor: "red",
+            borderColor: "black",
           }}
         >
           {/* Micro-Bio Bottom Sheet Content */}
@@ -584,7 +602,11 @@ export default class DashBoard extends React.Component {
                   marginHorizontal: 27,
                 }}
               >
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() =>
+                    this.props.navigation.navigate("TextRecognition")
+                  }
+                >
                   <View
                     style={{
                       backgroundColor: "#1C4C4E",
@@ -596,10 +618,20 @@ export default class DashBoard extends React.Component {
                       justifyContent: "center",
                     }}
                   >
-                    <Text>Scan Now</Text>
+                    <Icon
+                      name="camera"
+                      size={20}
+                      style={{ marginRight: 5 }}
+                      color="#fff"
+                    />
+                    <Text style={{ color: "#fff" }}>Scan Now</Text>
                   </View>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() =>
+                    this.props.navigation.navigate("TextRecognitionLesson")
+                  }
+                >
                   <View
                     style={{
                       backgroundColor: "#28B67E",
@@ -611,7 +643,13 @@ export default class DashBoard extends React.Component {
                       justifyContent: "center",
                     }}
                   >
-                    <Text>lessons</Text>
+                    <Icon
+                      name="book"
+                      size={20}
+                      style={{ marginRight: 5 }}
+                      color="#fff"
+                    />
+                    <Text style={{ color: "#fff" }}>Lessons</Text>
                   </View>
                 </TouchableOpacity>
               </View>
@@ -661,7 +699,11 @@ export default class DashBoard extends React.Component {
                   marginHorizontal: 27,
                 }}
               >
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() =>
+                    this.props.navigation.navigate("AnimalRecognition")
+                  }
+                >
                   <View
                     style={{
                       backgroundColor: "#1C4C4E",
@@ -673,7 +715,13 @@ export default class DashBoard extends React.Component {
                       justifyContent: "center",
                     }}
                   >
-                    <Text>Scan Now</Text>
+                    <Icon
+                      name="camera"
+                      size={20}
+                      style={{ marginRight: 5 }}
+                      color="#fff"
+                    />
+                    <Text style={{ color: "#fff" }}>Scan Now</Text>
                   </View>
                 </TouchableOpacity>
                 <TouchableOpacity>
@@ -688,7 +736,13 @@ export default class DashBoard extends React.Component {
                       justifyContent: "center",
                     }}
                   >
-                    <Text>Lessons</Text>
+                    <Icon
+                      name="book"
+                      size={20}
+                      style={{ marginRight: 5 }}
+                      color="#fff"
+                    />
+                    <Text style={{ color: "#fff" }}>Lessons</Text>
                   </View>
                 </TouchableOpacity>
               </View>
