@@ -16,10 +16,15 @@ import "react-native-gesture-handler";
 import * as ImagePicker from "expo-image-picker";
 import AwesomeAlert from "react-native-awesome-alerts";
 import axios from "axios";
+import Header from "./header";
 import LocalIP from "./localIPAddress";
+import BottomSheet from "@gorhom/bottom-sheet";
+import Icon from "react-native-vector-icons/FontAwesome";
+import { scale } from "react-native-size-matters";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { screenNames } from "../constants/navConsts/screenNames";
 import { stackNames } from "../constants/navConsts/stackNames";
+import Header2 from "./header2";
 
 export default class HumanBodyParts extends React.Component {
   constructor(props) {
@@ -91,15 +96,15 @@ export default class HumanBodyParts extends React.Component {
                 resultTxt:
                   res.data.bodyparts + " || Accuracy: " + res.data.accuracy,
               });
-              this.props.navigation.navigate(stackNames.HOME, {
-                screen: screenNames.RESULTS,
-                params: {
-                  result: res.data.bodyparts,
-                  resultMain:
-                    res.data.bodyparts + " || Accuracy: " + res.data.accuracy,
-                  resultTxt: res.data.text_data,
-                },
-              });
+              // this.props.navigation.navigate(stackNames.HOME, {
+              //   screen: screenNames.RESULTS,
+              //   params: {
+              //     result: res.data.bodyparts,
+              //     resultMain:
+              //       res.data.bodyparts + " || Accuracy: " + res.data.accuracy,
+              //     resultTxt: res.data.text_data,
+              //   },
+              // });
             });
         })
         .catch((error) => {
@@ -118,6 +123,12 @@ export default class HumanBodyParts extends React.Component {
     } else {
       this.setState({ title: "Required!", message: "Please choose image!" });
       this.showAlert();
+    }
+
+    if (this.state.result) {
+      this.setState({ SuccessBottomSheetVisible: true });
+    } else {
+      this.setState({ FailedBottomSheetVisible: true });
     }
   };
 
@@ -183,82 +194,346 @@ export default class HumanBodyParts extends React.Component {
 
   render() {
     const { showAlert } = this.state;
+    const snapPoints = ["25%", "25%"];
+
+    //     return (
+    //       <ScrollView style={styles.scrollView}>
+    //         <View style={styles.container}>
+    //           <View style={styles.center}>
+    //             <Image
+    //               source={require("./../assets/logo.png")}
+    //               style={{
+    //                 width: 150,
+    //                 height: 150,
+    //                 marginBottom: 20,
+    //                 marginTop: 10,
+    //               }}
+    //             />
+    //           </View>
+
+    //           <Text style={styles.labelText}>Upload Image:</Text>
+    //           <View style={styles.center}>
+    //             <TouchableOpacity
+    //               onPress={this.open_image_option}
+    //               style={{
+    //                 width: 80 + "%",
+    //                 height: Dimensions.get("window").width * 0.8,
+    //                 borderWidth: 1,
+    //                 marginBottom: 10,
+    //                 marginTop: 10,
+    //                 borderColor: "#c4c4c4",
+    //               }}
+    //             >
+    //               <View>
+    //                 <Image
+    //                   source={{ uri: this.state.localUri }}
+    //                   style={{ width: 100 + "%", height: 100 + "%" }}
+    //                 />
+    //               </View>
+    //             </TouchableOpacity>
+    //             <TouchableOpacity
+    //               style={[
+    //                 styles.buttonContainer,
+    //                 styles.registerButton,
+    //                 { width: 50 + "%" },
+    //               ]}
+    //               onPress={this.open_image_option}
+    //             >
+    //               <Text style={{ color: "#ffffff", fontWeight: "bold" }}>
+    //                 Choose Image
+    //               </Text>
+    //             </TouchableOpacity>
+    //           </View>
+
+    //           <View style={styles.center}>
+    //             <TouchableOpacity
+    //               style={[styles.buttonContainer, styles.loginButton]}
+    //               onPress={this.onInsert}
+    //             >
+    //               {!this.state.loader ? (
+    //                 <Text style={{ color: "#ffffff", fontWeight: "bold" }}>
+    //                   Upload
+    //                 </Text>
+    //               ) : null}
+    //               {this.state.loader ? (
+    //                 <ActivityIndicator size="large" color={"#ffffff"} />
+    //               ) : null}
+    //             </TouchableOpacity>
+    //           </View>
+    //           {this.state.result == true
+    //             ? [
+    //                 <View style={styles.center}>
+    //                   <View>
+    //                     <Text style={{ fontWeight: "bold", fontSize: 18 }}>
+    //                       {this.state.resultTxt}
+    //                     </Text>
+    //                   </View>
+    //                 </View>,
+    //               ]
+    //             : null}
+
+    //           <AwesomeAlert
+    //             show={showAlert}
+    //             title={this.state.title}
+    //             message={this.state.message}
+    //             closeOnTouchOutside={true}
+    //             closeOnHardwareBackPress={false}
+    //             showCancelButton={true}
+    //             cancelText="Close"
+    //             cancelButtonColor="#AEDEF4"
+    //             onCancelPressed={() => {
+    //               this.hideAlert();
+    //             }}
+    //           />
+    //         </View>
+    //       </ScrollView>
+    //     );
+    //   }
+    // }
+
+    // const styles = StyleSheet.create({
+    //   container: {
+    //     flex: 1,
+    //     backgroundColor: "#ffffff",
+    //   },
+    //   center: {
+    //     alignItems: "center",
+    //   },
+    //   labelText: {
+    //     fontWeight: "bold",
+    //     fontSize: 14,
+    //     marginLeft: 10 + "%",
+    //   },
+    //   firstLabelText: {
+    //     fontWeight: "bold",
+    //     fontSize: 14,
+    //     marginLeft: 10 + "%",
+    //     marginTop: 2 + "%",
+    //   },
+    //   input: {
+    //     borderBottomWidth: 1,
+    //     width: 80 + "%",
+    //     height: 45,
+    //     marginBottom: 20,
+    //     flexDirection: "row",
+    //     alignItems: "center",
+    //     borderBottomColor: "#c4c4c4",
+    //     color: "#000000",
+    //   },
+    //   TextInputStyleClass: {
+    //     borderBottomWidth: 1,
+    //     width: 80 + "%",
+    //     height: 100,
+    //     marginBottom: 20,
+    //     flexDirection: "row",
+    //     alignItems: "center",
+    //     marginLeft: 4,
+    //     borderBottomColor: "#c4c4c4",
+    //     color: "#000000",
+    //   },
+    //   buttonContainer: {
+    //     flexDirection: "row",
+    //     justifyContent: "center",
+    //     alignItems: "center",
+    //     marginBottom: 10,
+    //     width: 80 + "%",
+    //     height: 40,
+    //     borderRadius: 60,
+    //   },
+    //   loginButton: {
+    //     backgroundColor: "#131d41",
+    //   },
+    //   registerButton: {
+    //     backgroundColor: "#4ff47c",
+    //   },
+    // });
 
     return (
-      <ScrollView style={styles.scrollView}>
-        <View style={styles.container}>
-          <View style={styles.center}>
-            <Image
-              source={require("./../assets/logo.png")}
-              style={{
-                width: 150,
-                height: 150,
-                marginBottom: 20,
-                marginTop: 10,
-              }}
-            />
-          </View>
+      <>
+        <Header2 />
 
-          <Text style={styles.labelText}>Upload Image:</Text>
-          <View style={styles.center}>
-            <TouchableOpacity
-              onPress={this.open_image_option}
+        <ScrollView style={styles.container}>
+          {/* Background Blur View */}
+          {/* {this.state.SuccessBottomSheetVisible && (
+          <BlurView
+            style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0 }}
+            blurType="light" // You can choose the desired blur type
+          />
+        )} */}
+          <View
+            style={{
+              backgroundColor: "#1C4C4E",
+              height: 80,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Text
               style={{
-                width: 80 + "%",
-                height: Dimensions.get("window").width * 0.8,
-                borderWidth: 1,
-                marginBottom: 10,
-                marginTop: 10,
-                borderColor: "#c4c4c4",
+                fontSize: 22,
+                fontFamily: "serif",
+                fontWeight: "bold",
+                color: "white",
+                backgroundColor: "#1C4C4E",
+                paddingTop: 0,
+                padding: 10,
+                textAlign: "center",
               }}
             >
-              <View>
+              Human Body Parts Recognition
+            </Text>
+          </View>
+          <View style={styles.header}>
+            {/* Your app logo or branding */}
+            {/* <Image source={require("./../assets/logo.png")} style={styles.logo} /> */}
+            {/* <Text style={styles.title}>Text Recognition</Text> */}
+          </View>
+
+          <Text style={styles.labelText}>Upload Image</Text>
+          <View style={styles.imageContainer}>
+            <TouchableOpacity
+              onPress={this.open_image_option}
+              style={styles.imagePicker}
+            >
+              {this.state.localUri ? (
                 <Image
                   source={{ uri: this.state.localUri }}
-                  style={{ width: 100 + "%", height: 100 + "%" }}
+                  style={styles.image}
                 />
-              </View>
+              ) : (
+                <MaterialCommunityIcons
+                  name="camera"
+                  color="#c4c4c4"
+                  size={60}
+                />
+              )}
             </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                styles.buttonContainer,
-                styles.registerButton,
-                { width: 50 + "%" },
-              ]}
-              onPress={this.open_image_option}
+          </View>
+          <View style={{ marginHorizontal: 20, marginTop: scale(40) }}>
+            <View style={{ flexDirection: "row", justifyContent: "center" }}>
+              <TouchableOpacity
+                style={{
+                  borderRadius: 12,
+                  borderColor: "#1C4C4E",
+                  borderWidth: 1,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: 150,
+                  height: 50,
+                }}
+                onPress={this.open_image_option}
+              >
+                <Text style={{ color: "#1C4C4E" }}>Choose Image</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                marginTop: 20,
+              }}
             >
-              <Text style={{ color: "#ffffff", fontWeight: "bold" }}>
-                Choose Image
-              </Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  borderRadius: 12,
+                  backgroundColor: "#1C4C4E",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: 150,
+                  height: 50,
+                }}
+                onPress={this.onInsert}
+                disabled={this.state.loader}
+              >
+                {this.state.loader ? (
+                  <ActivityIndicator size="large" color="#ffffff" />
+                ) : (
+                  <Text style={{ color: "white" }}>Upload</Text>
+                )}
+              </TouchableOpacity>
+            </View>
+            {this.state.result && this.state.SuccessBottomSheetVisible}
           </View>
 
-          <View style={styles.center}>
-            <TouchableOpacity
-              style={[styles.buttonContainer, styles.loginButton]}
-              onPress={this.onInsert}
+          <BottomSheet
+            ref={this.bottomSheetRef}
+            index={this.state.SuccessBottomSheetVisible ? 0 : -1}
+            snapPoints={snapPoints}
+            onChange={this.handleSheetChanges}
+            enablePanDownToClose={true}
+            handleComponent={() => <></>}
+            style={{
+              borderTopLeftRadius: 26,
+              borderTopRightRadius: 26,
+              backgroundColor: "#FFF",
+              padding: 16,
+              borderRadius: 8,
+            }}
+            backgroundStyle={{
+              borderTopLeftRadius: 26,
+              borderTopRightRadius: 26,
+              borderWidth: 1,
+              borderColor: "#EAEAEA",
+              backgroundColor: "#FFF",
+            }}
+          >
+            <View
+              style={{
+                paddingTop: 0,
+                backgroundColor: "white",
+                borderRadius: 8,
+                padding: 16,
+                justifyContent: "center",
+              }}
             >
-              {!this.state.loader ? (
-                <Text style={{ color: "#ffffff", fontWeight: "bold" }}>
-                  Upload
-                </Text>
-              ) : null}
-              {this.state.loader ? (
-                <ActivityIndicator size="large" color={"#ffffff"} />
-              ) : null}
-            </TouchableOpacity>
-          </View>
-          {this.state.result == true
-            ? [
-                <View style={styles.center}>
-                  <View>
-                    <Text style={{ fontWeight: "bold", fontSize: 18 }}>
-                      {this.state.resultTxt}
+              <Text
+                style={{
+                  marginHorizontal: 0,
+                  marginVertical: 10,
+                  fontWeight: "bold",
+                  fontSize: 18,
+                  textAlign: "center",
+                }}
+              >
+                Identified Body Part: {this.state.resultTxt}
+              </Text>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <TouchableOpacity
+                  onPress={() => this.props.navigation.navigate("HumanResults")}
+                >
+                  <View
+                    style={{
+                      backgroundColor: "#28B67E",
+                      width: scale(200),
+                      height: scale(50),
+                      borderRadius: 14,
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexDirection: "row",
+                    }}
+                  >
+                    <Icon
+                      name="book"
+                      size={20}
+                      style={{ marginRight: 5 }}
+                      color="#fff"
+                    />
+                    <Text style={{ color: "#fff", fontSize: 18 }}>
+                      Explore Details
                     </Text>
                   </View>
-                </View>,
-              ]
-            : null}
+                </TouchableOpacity>
+              </View>
+            </View>
+          </BottomSheet>
 
           <AwesomeAlert
             show={showAlert}
@@ -273,8 +548,8 @@ export default class HumanBodyParts extends React.Component {
               this.hideAlert();
             }}
           />
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </>
     );
   }
 }
@@ -282,56 +557,94 @@ export default class HumanBodyParts extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: "#fff",
+    // padding: 20,
   },
-  center: {
+  header: {
+    flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 20,
+  },
+  title: {
+    fontWeight: "bold",
+    fontSize: 24,
+    marginLeft: 10,
+    color: "#131d41",
   },
   labelText: {
     fontWeight: "bold",
-    fontSize: 14,
-    marginLeft: 10 + "%",
-  },
-  firstLabelText: {
-    fontWeight: "bold",
-    fontSize: 14,
-    marginLeft: 10 + "%",
-    marginTop: 2 + "%",
-  },
-  input: {
-    borderBottomWidth: 1,
-    width: 80 + "%",
-    height: 45,
-    marginBottom: 20,
-    flexDirection: "row",
-    alignItems: "center",
-    borderBottomColor: "#c4c4c4",
-    color: "#000000",
-  },
-  TextInputStyleClass: {
-    borderBottomWidth: 1,
-    width: 80 + "%",
-    height: 100,
-    marginBottom: 20,
-    flexDirection: "row",
-    alignItems: "center",
-    marginLeft: 4,
-    borderBottomColor: "#c4c4c4",
-    color: "#000000",
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
+    fontSize: 16,
+    color: "#333",
+    textAlign: "center",
     marginBottom: 10,
-    width: 80 + "%",
-    height: 40,
-    borderRadius: 60,
   },
-  loginButton: {
+  imageContainer: {
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  imagePicker: {
+    width: 250,
+    height: 250,
+    borderRadius: 10,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: "#c4c4c4",
+  },
+  image: {
+    width: "100%",
+    height: "100%",
+    borderRadius: 10,
+  },
+  chooseImageButton: {
+    backgroundColor: "rgba(255, 255, 255, 0)",
+    borderRadius: 10,
+    padding: 10,
+    marginTop: 5,
+    borderColor: "#131d41",
+    borderWidth: 2,
+    borderCurve: 10,
+    marginBottom: 10,
+  },
+  chooseImageText: {
+    color: "#131d41",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  uploadButton: {
     backgroundColor: "#131d41",
+    borderRadius: 10,
+    padding: 10,
+    alignItems: "center",
   },
-  registerButton: {
-    backgroundColor: "#4ff47c",
+  disabledButton: {
+    backgroundColor: "#c4c4c4",
+  },
+  uploadButtonText: {
+    color: "#fff",
+    fontWeight: "bold",
+  },
+  resultContainer: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: "#fff",
+    borderRadius: 10,
+  },
+  resultText: {
+    fontWeight: "bold",
+    fontSize: 18,
+    color: "#333",
+  },
+  card: {
+    marginTop: 20,
+    width: "100%",
+    paddingTop: 20,
+    paddingLeft: 20,
+    paddingRight: 20,
+    height: 200,
+    backgroundColor: "#CFDEF2",
+    paddingBottom: 20,
   },
 });
