@@ -111,26 +111,49 @@ export default class Results extends React.Component {
     const { showAlert } = this.state;
     return (
       <ScrollView>
+        <View style={styles.header}>
+          <Icon
+            name="arrow-left"
+            size={20}
+            color="white"
+            onPress={this.handleBack}
+          />
+          <Text style={styles.headerText}>Result</Text>
+          <View style={styles.rightHeader}>
+            <Icon
+              name="ellipsis-v"
+              size={20}
+              color="white"
+              onPress={this.handleMenu}
+            />
+          </View>
+        </View>
         <View style={styles.container}>
+          <Text style={{ fontWeight: "bold", fontSize: 24, marginBottom: 20 }}>
+            {this.state.resultMain}
+          </Text>
           <Image
             source={{ uri: this.state.imageUri }}
-            style={{ width: 200, height: 200, marginBottom: 50, marginTop: 10 }}
+            style={{
+              width: 150,
+              height: 150,
+              marginBottom: 50,
+              marginTop: 10,
+              borderRadius: 14,
+            }}
           />
-
-          <View style={styles.center}>
-            <Text
-              style={{ fontWeight: "bold", fontSize: 24, marginBottom: 20 }}
-            >
-              {this.state.resultMain}
-            </Text>
-          </View>
-          <View style={styles.center}>
+          <Text style={{ fontWeight: "bold", fontSize: 18, marginBottom: 5 }}>
+            Description
+          </Text>
+          <Image source={require("../assets/save.png")} style={styles.search} />
+          <View>
             <Text
               style={{
                 fontSize: 12,
                 marginBottom: 20,
                 marginLeft: 15,
                 marginRight: 15,
+                marginTop: 10,
               }}
             >
               {this.state.resultTxt}
@@ -167,9 +190,26 @@ export default class Results extends React.Component {
       </ScrollView>
     );
   }
+  handleBack = () => {
+    this.props.navigation.navigate("Dashboard");
+  };
 }
 
 const styles = StyleSheet.create({
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    height: 50,
+    backgroundColor: "#1C4C4E",
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
+  headerText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "white",
+  },
   container: {
     flex: 1,
     alignItems: "center",
@@ -215,5 +255,9 @@ const styles = StyleSheet.create({
   },
   registerButton: {
     backgroundColor: "#4ff47c",
+  },
+  search: {
+    marginTop: 10,
+    marginLeft: 10,
   },
 });

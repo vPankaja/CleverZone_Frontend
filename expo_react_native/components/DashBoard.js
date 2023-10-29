@@ -724,7 +724,11 @@ export default class DashBoard extends React.Component {
                     <Text style={{ color: "#fff" }}>Scan Now</Text>
                   </View>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() =>
+                    this.props.navigation.navigate("AnimalRecognitionLesson")
+                  }
+                >
                   <View
                     style={{
                       backgroundColor: "#28B67E",

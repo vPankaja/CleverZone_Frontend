@@ -28,6 +28,8 @@ const Tabs = () => {
             iconName = 'home';
           } else if (route.name === stackNames.LOGOUT) {
             iconName = 'log-out';
+          }else if (route.name===stackNames.SETTINGS){
+            iconName = 'settings';
           }
 
           // Return the icon component
@@ -44,6 +46,20 @@ const Tabs = () => {
       />
       <Tab.Screen
         name={stackNames.LOGOUT}
+        component={HomeStack}
+        options={{
+          headerShown: false,
+        }}
+      />
+            <Tab.Screen
+        name={stackNames.CHATBOT}
+        component={HomeStack}
+        options={{
+          headerShown: false,
+        }}
+      />
+            <Tab.Screen
+        name={stackNames.SETTINGS}
         component={HomeStack}
         options={{
           headerShown: false,
