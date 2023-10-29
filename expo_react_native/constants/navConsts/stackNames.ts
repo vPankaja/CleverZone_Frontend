@@ -3,4 +3,6 @@ export const stackNames = {
     HOME: 'HOME',
     AUTH: 'AUTH',
 LOGOUT: 'LOGOUT',
+SETTINGS:'SETTINGS',
+CHATBOT: 'CHATBOT',
 }
