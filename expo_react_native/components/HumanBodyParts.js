@@ -94,7 +94,12 @@ export default class HumanBodyParts extends React.Component {
                 loader: false,
                 result: true,
                 resultTxt:
-                  res.data.bodyparts + " || Accuracy: " + res.data.accuracy,
+                  res.data.bodyparts,
+
+                  resultAcc:
+                  " Accuracy " + res.data.accuracy + "%",
+                  // resultTxt:
+                  // res.data.bodyparts + " || Accuracy: " + res.data.accuracy,
               });
               // this.props.navigation.navigate(stackNames.HOME, {
               //   screen: screenNames.RESULTS,
@@ -197,7 +202,7 @@ export default class HumanBodyParts extends React.Component {
 
   render() {
     const { showAlert } = this.state;
-    const snapPoints = ["25%", "25%"];
+    const snapPoints = ["35%", "25%"];
 
     //     return (
     //       <ScrollView style={styles.scrollView}>
@@ -445,88 +450,12 @@ export default class HumanBodyParts extends React.Component {
                   <Text style={{ color: "white" }}>Upload</Text>
                 )}
               </TouchableOpacity>
-            </View>
+            </View> 
+            {/* {this.state.resultTxt} */}
             {this.state.result && this.state.SuccessBottomSheetVisible}
           </View>
 
-          <BottomSheet
-            ref={this.bottomSheetRef}
-            index={this.state.SuccessBottomSheetVisible ? 0 : -1}
-            snapPoints={snapPoints}
-            onChange={this.handleSheetChanges}
-            enablePanDownToClose={true}
-            handleComponent={() => <></>}
-            style={{
-              borderTopLeftRadius: 26,
-              borderTopRightRadius: 26,
-              backgroundColor: "#FFF",
-              padding: 16,
-              borderRadius: 8,
-            }}
-            backgroundStyle={{
-              borderTopLeftRadius: 26,
-              borderTopRightRadius: 26,
-              borderWidth: 1,
-              borderColor: "#EAEAEA",
-              backgroundColor: "#FFF",
-            }}
-          >
-            <View
-              style={{
-                paddingTop: 0,
-                backgroundColor: "white",
-                borderRadius: 8,
-                padding: 16,
-                justifyContent: "center",
-              }}
-            >
-              <Text
-                style={{
-                  marginHorizontal: 0,
-                  marginVertical: 10,
-                  fontWeight: "bold",
-                  fontSize: 18,
-                  textAlign: "center",
-                }}
-              >
-                Identified Body Part: {this.state.resultTxt}
-              </Text>
-
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <TouchableOpacity
-                  onPress={() => this.props.navigation.navigate("HumanResults")}
-                >
-                  <View
-                    style={{
-                      backgroundColor: "#28B67E",
-                      width: scale(200),
-                      height: scale(50),
-                      borderRadius: 14,
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexDirection: "row",
-                    }}
-                  >
-                    <Icon
-                      name="book"
-                      size={20}
-                      style={{ marginRight: 5 }}
-                      color="#fff"
-                    />
-                    <Text style={{ color: "#fff", fontSize: 18 }}>
-                      Explore Details
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </BottomSheet>
+          
 
           <AwesomeAlert
             show={showAlert}
@@ -542,6 +471,68 @@ export default class HumanBodyParts extends React.Component {
             }}
           />
         </ScrollView>
+        <BottomSheet
+  ref={this.anatomyBottomSheetRef}
+  index={this.state.SuccessBottomSheetVisible ? 0 : -1}
+  snapPoints={snapPoints}
+  onChange={this.handleSheetChanges}
+  enablePanDownToClose={true}
+  handleComponent={() => (
+    <View
+      style={{
+        backgroundColor: "#1C4C4E",
+        height: 8,
+        width: 60,
+        alignSelf: "center",
+        borderRadius: 4,
+        marginTop: 10,
+      }}
+    />
+  )}
+  style={{
+    borderTopLeftRadius: 26,
+    borderTopRightRadius: 26,
+    borderWidth: 1,
+    borderColor: "#28B67E", // Green color
+    backgroundColor: "#FFF", // White background
+  }}
+  backgroundStyle={{
+    borderTopLeftRadius: 26,
+    borderTopRightRadius: 26,
+    borderWidth: 1,
+    borderColor: "#28B67E", // Green color
+    backgroundColor: "#FFF", // White background
+  }}
+>
+  <View style={styles.successBottomSheetVisibleContent}>
+    <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
+      <Text style={{ fontSize: 24, color: '#28B67E' }}>✓</Text>
+      <Text style={styles.title2}>
+        Hurray, we identified!
+        <Text style={{ color: 'gray' }}>{this.state.resultAcc}</Text>
+      </Text>
+    </View>
+    <Text style={{ fontWeight: 'bold', color: 'black', fontSize: 18, marginVertical: 10 }}>
+      {this.state.resultTxt}
+    </Text>
+    <Text style={styles.description}>
+      Click the button to explore content about the {this.state.resultTxt}.
+    </Text>
+    <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 10 }}>
+      <TouchableOpacity
+        style={styles.lessonButton}
+        onPress={() => this.props.navigation.navigate("AnatomyLesson")}
+      >
+        <View style={styles.buttonInner}>
+          <Icon name="book" size={20} style={styles.icon} color="#fff" />
+          <Text style={styles.buttonText}>Explore More</Text>
+        </View>
+      </TouchableOpacity>
+    </View>
+  </View>
+</BottomSheet>
+
+
       </>
     );
   }
@@ -640,4 +631,55 @@ const styles = StyleSheet.create({
     backgroundColor: "#CFDEF2",
     paddingBottom: 20,
   },
+  successBottomSheetVisibleContent: {
+    flex: 1,
+    backgroundColor: "white",
+    borderTopLeftRadius: 26,
+    borderTopRightRadius: 26,
+    padding: 20, 
+  },
+  title2: {
+    fontSize: 16, 
+    fontWeight: "bold",
+    color: "#28B67E", 
+    marginBottom: 2, 
+  },
+  description: {
+    fontSize: 14, 
+    marginBottom: 10, 
+    marginTop:10,
+    color:"#D3D3D3"
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  scanButton: {
+    backgroundColor: "#1C4C4E",
+    width: scale(120),
+    height: scale(50),
+    borderRadius: 14,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  lessonButton: {
+    backgroundColor: "#28B67E",
+    width: scale(120),
+    height: scale(50),
+    borderRadius: 14,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttonInner: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  icon: {
+    marginRight: 5,
+  },
+  buttonText: {
+    color: "#fff",
+  },
+  
 });
