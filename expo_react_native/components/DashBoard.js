@@ -27,14 +27,15 @@ export default class DashBoard extends React.Component {
       title: "",
       index: 1,
       scan: -1,
-    };
-    this.bottomSheetRef = React.createRef();
-    this.state = {
       anatomyBottomSheetVisible: false,
       microBioBottomSheetVisible: false,
       zoologyBottomSheetVisible: false,
-    };
+  };
+    this.anatomyBottomSheetRef = React.createRef();
+    this.microBioBottomSheetRef = React.createRef();
+    this.zoologyBottomSheetRef = React.createRef();
   }
+
 
   logout = async () => {
     AsyncStorage.clear();
@@ -468,7 +469,7 @@ export default class DashBoard extends React.Component {
           </View>
         </BottomSheet> */}
         <BottomSheet
-          ref={this.bottomSheetRef}
+          ref={this.anatomyBottomSheetRef }
           index={this.state.anatomyBottomSheetVisible ? 0 : -1}
           snapPoints={snapPoints}
           onChange={this.handleSheetChanges}
@@ -489,7 +490,7 @@ export default class DashBoard extends React.Component {
                 flex: 1,
                 // alignItems: "center",
                 backgroundColor: "white",
-                height: 100,
+                height: 150,
                 borderTopLeftRadius: 26,
                 borderTopRightRadius: 26,
               }}
@@ -500,7 +501,8 @@ export default class DashBoard extends React.Component {
                   marginBottom: scale(50),
                 }}
               >
-                Awesome 🎉
+               Unlock the world of anatomy
+               Scan your documents or dive into our provided lessons.
               </Text>
               <View
                 style={{
@@ -534,7 +536,10 @@ export default class DashBoard extends React.Component {
                     <Text style={{ color: "#fff" }}>Scan Now</Text>
                   </View>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity
+                onPress={() =>
+                  this.props.navigation.navigate("AnatomyLesson")
+                }>
                   <View
                     style={{
                       backgroundColor: "#28B67E",
@@ -561,7 +566,7 @@ export default class DashBoard extends React.Component {
         </BottomSheet>
 
         <BottomSheet
-          ref={this.bottomSheetRef}
+          ref={this.microBioBottomSheetRef}
           index={this.state.microBioBottomSheetVisible ? 0 : -1}
           snapPoints={snapPoints}
           onChange={this.handleSheetChanges}
@@ -658,7 +663,7 @@ export default class DashBoard extends React.Component {
         </BottomSheet>
 
         <BottomSheet
-          ref={this.bottomSheetRef}
+          ref={this.zoologyBottomSheetRef}
           index={this.state.zoologyBottomSheetVisible ? 0 : -1}
           snapPoints={snapPoints}
           onChange={this.handleSheetChanges}

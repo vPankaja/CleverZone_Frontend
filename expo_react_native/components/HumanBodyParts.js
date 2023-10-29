@@ -118,19 +118,22 @@ export default class HumanBodyParts extends React.Component {
   onInsert = async (e) => {
     if (this.state.localUri != "") {
       this.setState({ loader: true });
-
+  
+      this.setState({ SuccessBottomSheetVisible: false });
+  
       await this.uploadImage(this.state.localUri);
     } else {
-      this.setState({ title: "Required!", message: "Please choose image!" });
+      this.setState({ title: "Required!", message: "Please choose an image!" });
       this.showAlert();
     }
-
+  
     if (this.state.result) {
       this.setState({ SuccessBottomSheetVisible: true });
     } else {
       this.setState({ FailedBottomSheetVisible: true });
     }
   };
+  
 
   showAlert = () => {
     this.setState({
@@ -353,13 +356,6 @@ export default class HumanBodyParts extends React.Component {
         <Header2 />
 
         <ScrollView style={styles.container}>
-          {/* Background Blur View */}
-          {/* {this.state.SuccessBottomSheetVisible && (
-          <BlurView
-            style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0 }}
-            blurType="light" // You can choose the desired blur type
-          />
-        )} */}
           <View
             style={{
               backgroundColor: "#1C4C4E",
@@ -384,9 +380,6 @@ export default class HumanBodyParts extends React.Component {
             </Text>
           </View>
           <View style={styles.header}>
-            {/* Your app logo or branding */}
-            {/* <Image source={require("./../assets/logo.png")} style={styles.logo} /> */}
-            {/* <Text style={styles.title}>Text Recognition</Text> */}
           </View>
 
           <Text style={styles.labelText}>Upload Image</Text>
