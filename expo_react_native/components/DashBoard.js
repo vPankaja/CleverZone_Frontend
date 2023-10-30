@@ -17,6 +17,7 @@ import { scale } from "react-native-size-matters";
 import BottomSheet from "@gorhom/bottom-sheet";
 import Icon from "react-native-vector-icons/FontAwesome";
 
+
 export default class DashBoard extends React.Component {
   constructor(props) {
     super(props);
@@ -41,16 +42,17 @@ export default class DashBoard extends React.Component {
     AsyncStorage.clear();
     this.props.navigation.replace("Login");
   };
-  handleSheetChanges = (index) => {
-    // console.log("handleSheetChanges", index);
 
-    if (index == -1) {
-      console.log("handleSheetChanges", index);
+  handleSheetChanges = (index) => {
+    if (index === -1) {
       this.setState({
-        scan: -1,
+        anatomyBottomSheetVisible: false,
+        microBioBottomSheetVisible: false,
+        zoologyBottomSheetVisible: false,
       });
     }
   };
+  
 
   static navigationOptions = ({ navigation }) => ({
     title: "DashBoard",
@@ -79,11 +81,6 @@ export default class DashBoard extends React.Component {
     });
   };
 
-  // showBottomSheet = () => {
-  //   this.setState({
-  //     scan: 0,
-  //   });
-  // };
   showBottomSheet = (sheetType) => {
     this.setState({
       anatomyBottomSheetVisible: sheetType === "anatomy",
@@ -154,6 +151,7 @@ export default class DashBoard extends React.Component {
       //   />
       // </View>
       <>
+      
       <ScrollView style={styles.container2}>
         <View
           style={{
@@ -920,6 +918,9 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "#fff",
+  },
+  blurContainer: {
+    flex: 1,
   },
   
 });
