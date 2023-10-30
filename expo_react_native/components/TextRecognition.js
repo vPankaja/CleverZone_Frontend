@@ -173,6 +173,9 @@ export default class TextRecognition extends React.Component {
     } else {
       pickerResult = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        allowsMultipleSelection: false,
+        aspect: [4, 2],
       });
     }
 
