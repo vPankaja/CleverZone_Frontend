@@ -17,6 +17,7 @@ import { scale } from "react-native-size-matters";
 import BottomSheet from "@gorhom/bottom-sheet";
 import Icon from "react-native-vector-icons/FontAwesome";
 
+
 export default class DashBoard extends React.Component {
   constructor(props) {
     super(props);
@@ -27,29 +28,31 @@ export default class DashBoard extends React.Component {
       title: "",
       index: 1,
       scan: -1,
-    };
-    this.bottomSheetRef = React.createRef();
-    this.state = {
       anatomyBottomSheetVisible: false,
       microBioBottomSheetVisible: false,
       zoologyBottomSheetVisible: false,
-    };
+  };
+    this.anatomyBottomSheetRef = React.createRef();
+    this.microBioBottomSheetRef = React.createRef();
+    this.zoologyBottomSheetRef = React.createRef();
   }
+
 
   logout = async () => {
     AsyncStorage.clear();
     this.props.navigation.replace("Login");
   };
-  handleSheetChanges = (index) => {
-    // console.log("handleSheetChanges", index);
 
-    if (index == -1) {
-      console.log("handleSheetChanges", index);
+  handleSheetChanges = (index) => {
+    if (index === -1) {
       this.setState({
-        scan: -1,
+        anatomyBottomSheetVisible: false,
+        microBioBottomSheetVisible: false,
+        zoologyBottomSheetVisible: false,
       });
     }
   };
+  
 
   static navigationOptions = ({ navigation }) => ({
     title: "DashBoard",
@@ -78,11 +81,6 @@ export default class DashBoard extends React.Component {
     });
   };
 
-  // showBottomSheet = () => {
-  //   this.setState({
-  //     scan: 0,
-  //   });
-  // };
   showBottomSheet = (sheetType) => {
     this.setState({
       anatomyBottomSheetVisible: sheetType === "anatomy",
@@ -93,7 +91,7 @@ export default class DashBoard extends React.Component {
 
   render() {
     const { showAlert } = this.state;
-    const snapPoints = ["25%", "25%"];
+    const snapPoints = ["30%", "20%"];
     return (
       // <View style={styles.container}>
       //   {/* <Image source={require('./../assets/logo.png')}
@@ -152,6 +150,8 @@ export default class DashBoard extends React.Component {
       //     }}
       //   />
       // </View>
+      <>
+      
       <ScrollView style={styles.container2}>
         <View
           style={{
@@ -394,365 +394,7 @@ export default class DashBoard extends React.Component {
           </Text>
         </View>
 
-        {/* <BottomSheet
-          ref={this.bottomSheetRef}
-          index={this.state.scan}
-          snapPoints={snapPoints}
-          onChange={this.handleSheetChanges}
-          enablePanDownToClose={true}
-          handleComponent={() => <></>}
-          style={{}}
-          backgroundStyle={{
-            borderTopLeftRadius: 26,
-            borderTopRightRadius: 26,
-            borderWidth: 1,
-            borderColor: "red",
-          }}
-        >
-          <View
-            style={{
-              flex: 1,
-              // alignItems: "center",
-              backgroundColor: "white",
-              height: 100,
-              borderTopLeftRadius: 26,
-              borderTopRightRadius: 26,
-            }}
-          >
-            <Text
-              style={{
-                marginHorizontal: 27,
-                marginBottom: scale(50),
-              }}
-            >
-              Awesome 🎉
-            </Text>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                marginHorizontal: 27,
-              }}
-            >
-              <TouchableOpacity>
-                <View
-                  style={{
-                    backgroundColor: "#1C4C4E",
-                    flexDirection: "row",
-                    width: scale(120),
-                    height: scale(56),
-                    borderRadius: 14,
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Text>Scan Now</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <View
-                  style={{
-                    backgroundColor: "#28B67E",
-
-                    width: scale(120),
-                    height: scale(56),
-                    borderRadius: 14,
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Text>lessons</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </BottomSheet> */}
-        <BottomSheet
-          ref={this.bottomSheetRef}
-          index={this.state.anatomyBottomSheetVisible ? 0 : -1}
-          snapPoints={snapPoints}
-          onChange={this.handleSheetChanges}
-          enablePanDownToClose={true}
-          handleComponent={() => <></>}
-          style={{}}
-          backgroundStyle={{
-            borderTopLeftRadius: 26,
-            borderTopRightRadius: 26,
-            borderWidth: 1,
-            borderColor: "black",
-          }}
-        >
-          {/* Anatomy Bottom Sheet Content */}
-          <View>
-            <View
-              style={{
-                flex: 1,
-                // alignItems: "center",
-                backgroundColor: "white",
-                height: 100,
-                borderTopLeftRadius: 26,
-                borderTopRightRadius: 26,
-              }}
-            >
-              <Text
-                style={{
-                  marginHorizontal: 27,
-                  marginBottom: scale(50),
-                }}
-              >
-                Awesome 🎉
-              </Text>
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginHorizontal: 27,
-                }}
-              >
-                <TouchableOpacity
-                  onPress={() =>
-                    this.props.navigation.navigate("HumanBodyParts")
-                  }
-                >
-                  <View
-                    style={{
-                      backgroundColor: "#1C4C4E",
-                      flexDirection: "row",
-                      width: scale(120),
-                      height: scale(56),
-                      borderRadius: 14,
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Icon
-                      name="camera"
-                      size={20}
-                      style={{ marginRight: 5 }}
-                      color="#fff"
-                    />
-                    <Text style={{ color: "#fff" }}>Scan Now</Text>
-                  </View>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                  <View
-                    style={{
-                      backgroundColor: "#28B67E",
-
-                      width: scale(120),
-                      height: scale(56),
-                      borderRadius: 14,
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Icon
-                      name="book"
-                      size={20}
-                      style={{ marginRight: 5 }}
-                      color="#fff"
-                    />
-                    <Text style={{ color: "#fff" }}>Lessons</Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        </BottomSheet>
-
-        <BottomSheet
-          ref={this.bottomSheetRef}
-          index={this.state.microBioBottomSheetVisible ? 0 : -1}
-          snapPoints={snapPoints}
-          onChange={this.handleSheetChanges}
-          enablePanDownToClose={true}
-          handleComponent={() => <></>}
-          style={{}}
-          backgroundStyle={{
-            borderTopLeftRadius: 26,
-            borderTopRightRadius: 26,
-            borderWidth: 1,
-            borderColor: "black",
-          }}
-        >
-          {/* Micro-Bio Bottom Sheet Content */}
-          <View>
-            <View
-              style={{
-                flex: 1,
-                // alignItems: "center",
-                backgroundColor: "white",
-                height: 100,
-                borderTopLeftRadius: 26,
-                borderTopRightRadius: 26,
-              }}
-            >
-              <Text
-                style={{
-                  marginHorizontal: 27,
-                  marginBottom: scale(50),
-                }}
-              >
-                Awesome 🎉
-              </Text>
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginHorizontal: 27,
-                }}
-              >
-                <TouchableOpacity
-                  onPress={() =>
-                    this.props.navigation.navigate("TextRecognition")
-                  }
-                >
-                  <View
-                    style={{
-                      backgroundColor: "#1C4C4E",
-                      flexDirection: "row",
-                      width: scale(120),
-                      height: scale(56),
-                      borderRadius: 14,
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Icon
-                      name="camera"
-                      size={20}
-                      style={{ marginRight: 5 }}
-                      color="#fff"
-                    />
-                    <Text style={{ color: "#fff" }}>Scan Now</Text>
-                  </View>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() =>
-                    this.props.navigation.navigate("TextRecognitionLesson")
-                  }
-                >
-                  <View
-                    style={{
-                      backgroundColor: "#28B67E",
-
-                      width: scale(120),
-                      height: scale(56),
-                      borderRadius: 14,
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Icon
-                      name="book"
-                      size={20}
-                      style={{ marginRight: 5 }}
-                      color="#fff"
-                    />
-                    <Text style={{ color: "#fff" }}>Lessons</Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        </BottomSheet>
-
-        <BottomSheet
-          ref={this.bottomSheetRef}
-          index={this.state.zoologyBottomSheetVisible ? 0 : -1}
-          snapPoints={snapPoints}
-          onChange={this.handleSheetChanges}
-          enablePanDownToClose={true}
-          handleComponent={() => <></>}
-          style={{}}
-          backgroundStyle={{
-            borderTopLeftRadius: 26,
-            borderTopRightRadius: 26,
-            borderWidth: 1,
-            borderColor: "black",
-          }}
-        >
-          {/* Zoology Bottom Sheet Content */}
-          <View>
-            <View
-              style={{
-                flex: 1,
-                // alignItems: "center",
-                backgroundColor: "white",
-                height: 100,
-                borderTopLeftRadius: 26,
-                borderTopRightRadius: 26,
-              }}
-            >
-              <Text
-                style={{
-                  marginHorizontal: 27,
-                  marginBottom: scale(50),
-                }}
-              >
-                Zoology
-              </Text>
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginHorizontal: 27,
-                }}
-              >
-                <TouchableOpacity
-                  onPress={() =>
-                    this.props.navigation.navigate("AnimalRecognition")
-                  }
-                >
-                  <View
-                    style={{
-                      backgroundColor: "#1C4C4E",
-                      flexDirection: "row",
-                      width: scale(120),
-                      height: scale(56),
-                      borderRadius: 14,
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Icon
-                      name="camera"
-                      size={20}
-                      style={{ marginRight: 5 }}
-                      color="#fff"
-                    />
-                    <Text style={{ color: "#fff" }}>Scan Now</Text>
-                  </View>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() =>
-                    this.props.navigation.navigate("AnimalRecognitionLesson")
-                  }
-                >
-                  <View
-                    style={{
-                      backgroundColor: "#28B67E",
-
-                      width: scale(120),
-                      height: scale(56),
-                      borderRadius: 14,
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Icon
-                      name="book"
-                      size={20}
-                      style={{ marginRight: 5 }}
-                      color="#fff"
-                    />
-                    <Text style={{ color: "#fff" }}>Lessons</Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        </BottomSheet>
+  
 
         {/* <View style={styles.cardWrapper}>
           <Card style={styles.card}>
@@ -918,6 +560,187 @@ export default class DashBoard extends React.Component {
           </TouchableOpacity> */}
         {/* </View> */}
       </ScrollView>
+      <BottomSheet
+      ref={this.anatomyBottomSheetRef}
+      index={this.state.anatomyBottomSheetVisible ? 0 : -1}
+      snapPoints={snapPoints}
+      onChange={this.handleSheetChanges}
+      enablePanDownToClose={true}
+      handleComponent={() => (
+        <View
+          style={{
+            backgroundColor: "#1C4C4E", 
+            height: 8, 
+            width: 60, 
+            alignSelf: "center",
+            borderRadius: 4, 
+            marginTop: 10,
+          }}
+        />
+      )}
+      style={{
+        borderTopLeftRadius: 26,
+        borderTopRightRadius: 26,
+        borderWidth: 1,
+        borderColor: "black",
+      }}
+      backgroundStyle={{  
+        borderTopLeftRadius: 26,
+        borderTopRightRadius: 26,
+        borderWidth: 1,
+        borderColor: "black",
+      }}
+    >
+      <View style={styles.anatomyBottomSheetContent}>
+        <Text style={styles.title}>Unlock the world of anatomy</Text>
+        <Text style={styles.description}>
+          Scan your documents or dive into our provided lessons.
+        </Text>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.scanButton}
+            onPress={() => this.props.navigation.navigate("HumanBodyParts")}
+          >
+            <View style={styles.buttonInner}>
+              <Icon name="camera" size={20} style={styles.icon} color="#fff" />
+              <Text style={styles.buttonText}>Scan Now</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.lessonButton}
+            onPress={() => this.props.navigation.navigate("AnatomyLesson")}
+          >
+            <View style={styles.buttonInner}>
+              <Icon name="book" size={20} style={styles.icon} color="#fff" />
+              <Text style={styles.buttonText}>Lessons</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </BottomSheet>
+
+         
+
+
+<BottomSheet
+  ref={this.microBioBottomSheetRef}
+  index={this.state.microBioBottomSheetVisible ? 0 : -1}
+  snapPoints={snapPoints}
+  onChange={this.handleSheetChanges}
+  enablePanDownToClose={true}
+  handleComponent={() => (
+    <View
+      style={{
+        backgroundColor: "#1C4C4E",
+        height: 8,
+        width: 60,
+        alignSelf: "center",
+        borderRadius: 4,
+        marginTop: 10,
+      }}
+    />
+  )}
+  style={{
+    borderTopLeftRadius: 26,
+    borderTopRightRadius: 26,
+    borderWidth: 1,
+    borderColor: "black",
+  }}
+  backgroundStyle={{
+    borderTopLeftRadius: 26,
+    borderTopRightRadius: 26,
+    borderWidth: 1,
+    borderColor: "black",
+  }}
+>
+  <View style={styles.microBioBottomSheetContent}>
+    <Text style={styles.title}>Unlock the world of Micro-Biology</Text>
+    <Text style={styles.description}>
+      Scan your documents or dive into our provided lessons.
+    </Text>
+    <View style={styles.buttonContainer}>
+      <TouchableOpacity
+        style={styles.scanButton}
+        onPress={() => this.props.navigation.navigate("TextRecognition")}
+      >
+        <View style={styles.buttonInner}>
+          <Icon name="camera" size={20} style={styles.icon} color="#fff" />
+          <Text style={styles.buttonText}>Scan Now</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.lessonButton}
+        onPress={() => this.props.navigation.navigate("TextRecognitionLesson")}
+      >
+        <View style={styles.buttonInner}>
+          <Icon name="book" size={20} style={styles.icon} color="#fff" />
+          <Text style={styles.buttonText}>Lessons</Text>
+        </View>
+      </TouchableOpacity>
+    </View>
+  </View>
+</BottomSheet>
+
+
+<BottomSheet
+  ref={this.zoologyBottomSheetRef}
+  index={this.state.zoologyBottomSheetVisible ? 0 : -1}
+  snapPoints={snapPoints}
+  onChange={this.handleSheetChanges}
+  enablePanDownToClose={true}
+  handleComponent={() => (
+    <View
+      style={{
+        backgroundColor: "#1C4C4E",
+        height: 8,
+        width: 60,
+        alignSelf: "center",
+        borderRadius: 4,
+        marginTop: 10,
+      }}
+    />
+  )}
+  style={{
+    borderTopLeftRadius: 26,
+    borderTopRightRadius: 26,
+    borderWidth: 1,
+    borderColor: "black",
+  }}
+  backgroundStyle={{
+    borderTopLeftRadius: 26,
+    borderTopRightRadius: 26,
+    borderWidth: 1,
+    borderColor: "black",
+  }}
+>
+  <View style={styles.zoologyBottomSheetContent}>
+    <Text style={styles.title}>Unlock the world of Zoology</Text>
+    <Text style={styles.description}>
+      Scan your documents or dive into our provided lessons.
+    </Text>
+    <View style={styles.buttonContainer}>
+      <TouchableOpacity
+        style={styles.scanButton}
+        onPress={() => this.props.navigation.navigate("AnimalRecognition")}
+      >
+        <View style={styles.buttonInner}>
+          <Icon name="camera" size={20} style={styles.icon} color="#fff" />
+          <Text style={styles.buttonText}>Scan Now</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.lessonButton}
+        onPress={() => this.props.navigation.navigate("AnimalRecognitionLesson")}
+      >
+        <View style={styles.buttonInner}>
+          <Icon name="book" size={20} style={styles.icon} color="#fff" />
+          <Text style={styles.buttonText}>Lessons</Text>
+        </View>
+      </TouchableOpacity>
+    </View>
+  </View>
+</BottomSheet>
+    </>
     );
   }
 }
@@ -1034,4 +857,70 @@ const styles = StyleSheet.create({
     height: 100,
     resizeMode: "cover",
   },
+  anatomyBottomSheetContent: {
+    flex: 1,
+    backgroundColor: "white",
+    borderTopLeftRadius: 26,
+    borderTopRightRadius: 26,
+    padding: 20, 
+  },
+  microBioBottomSheetContent: {
+    flex: 1,
+    backgroundColor: "white",
+    borderTopLeftRadius: 26,
+    borderTopRightRadius: 26,
+    padding: 20,
+  },
+  zoologyBottomSheetContent: {
+    flex: 1,
+    backgroundColor: "white",
+    borderTopLeftRadius: 26,
+    borderTopRightRadius: 26,
+    padding: 20,
+  },
+  title: {
+    fontSize: 16, 
+    fontWeight: "bold",
+    color: "#28B67E", 
+    marginBottom: 10, 
+  },
+  description: {
+    fontSize: 14, 
+    marginBottom: 20, 
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  scanButton: {
+    backgroundColor: "#1C4C4E",
+    width: scale(120),
+    height: scale(50),
+    borderRadius: 14,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  lessonButton: {
+    backgroundColor: "#28B67E",
+    width: scale(120),
+    height: scale(50),
+    borderRadius: 14,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttonInner: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  icon: {
+    marginRight: 5,
+  },
+  buttonText: {
+    color: "#fff",
+  },
+  blurContainer: {
+    flex: 1,
+  },
+  
 });
