@@ -12,6 +12,7 @@ import AnimalRecognition from '../../components/AnimalRecognition';
 import DashBoard from '../../components/DashBoard';
 import Results from '../../components/Results';
 import Chat from '../../components/Chat';
+import ChatNew from '../../components/ChatNew';
 
 
 const HomeStackNav = createNativeStackNavigator();
@@ -23,7 +24,6 @@ const HomeStack = () => {
         name={screenNames.DASHBOARD}
         component={DashBoard}
         options={navConfig}
-        // mewa baalala ayn krgnna
         
       />
       <HomeStackNav.Screen
@@ -48,7 +48,7 @@ const HomeStack = () => {
       />
        <HomeStackNav.Screen
         name={screenNames.CHAT}
-        component={Chat}
+        component={ChatNew}
         options={navConfig}
       />
     </HomeStackNav.Navigator>
