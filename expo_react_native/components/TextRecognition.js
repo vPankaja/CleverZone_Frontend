@@ -25,6 +25,8 @@ import Header from "./header";
 import { scale } from "react-native-size-matters";
 import BottomSheet from "@gorhom/bottom-sheet";
 import Icon from "react-native-vector-icons/FontAwesome";
+import Header2 from "./header2";
+
 export default class TextRecognition extends React.Component {
   constructor(props) {
     super(props);
@@ -38,21 +40,21 @@ export default class TextRecognition extends React.Component {
       result: false,
       title: "",
       loader: false,
-      zoologyBottomSheetVisible: false,
+      SuccessBottomSheetVisible: false,
+      FailedBottomSheetVisible: false,
     };
-    this.bottomSheetRef = React.createRef();
   }
 
-  handleSheetChanges = (index) => {
-    // console.log("handleSheetChanges", index);
+  // handleSheetChanges = (index) => {
+  //   // console.log("handleSheetChanges", index);
 
-    if (index == -1) {
-      console.log("handleSheetChanges", index);
-      this.setState({
-        scan: -1,
-      });
-    }
-  };
+  //   if (index == -1) {
+  //     console.log("handleSheetChanges", index);
+  //     this.setState({
+  //       scan: -1,
+  //     });
+  //   }
+  // };
 
   static navigationOptions = ({ navigation }) => ({
     title: "Text Recognition",
@@ -105,23 +107,58 @@ export default class TextRecognition extends React.Component {
                 result: true,
                 resultTxt:
                   res.data.result + " || Accuracy: " + res.data.accuracy,
+                  resultTxt2: res.data.result,
+                  resultAcc: " Accuracy " + res.data.accuracy + "%",
+                  resultTxt3: res.data.text_data,
               });
-              this.props.navigation.navigate(stackNames.HOME, {
-                screen: screenNames.RESULTS,
-                params: {
-                  result: res.data.result,
-                  resultMain:
-                    res.data.result + " || Accuracy: " + res.data.accuracy,
-                  resultTxt: res.data.text_data,
-                },
-              });
+              // this.props.navigation.navigate(stackNames.HOME, {
+              //   screen: screenNames.RESULTS,
+              //   params: {
+              //     result: res.data.result,
+              //     resultMain:
+              //       res.data.result + " || Accuracy: " + res.data.accuracy,
+              //     resultTxt: res.data.text_data,
+              //   },
+              // });
+              if (!res.data.error) {
+                this.showSuccessBottomSheet();
+              } else {
+                this.showFailedBottomSheet();
+              }
             });
         })
         .catch((error) => {
           console.log(error);
+          this.setState({ loader: false });
+          this.showFailedBottomSheet();
         });
     } catch (err) {
       console.log(err);
+      this.setState({ loader: false });
+      this.showFailedBottomSheet();
+    }
+  };
+
+  showSuccessBottomSheet() {
+    this.setState({
+      SuccessBottomSheetVisible: true,
+      FailedBottomSheetVisible: false,
+    });
+  }
+
+  showFailedBottomSheet() {
+    this.setState({
+      FailedBottomSheetVisible: true,
+      SuccessBottomSheetVisible: false,
+    });
+  }
+
+  handleSheetChanges = (index) => {
+    if (index === -1) {
+      this.setState({
+        SuccessBottomSheetVisible: false,
+        FailedBottomSheetVisible: false,
+      });
     }
   };
 
@@ -203,13 +240,9 @@ export default class TextRecognition extends React.Component {
     ]);
   };
 
-  showZoologyBottomSheet = () => {
-    this.setState({ zoologyBottomSheetVisible: true });
-  };
-
   render() {
     const { showAlert } = this.state;
-    const snapPoints = ["25%", "25%"];
+    const snapPoints = ["35%", "25%"];
 
     //     return (
     //       <ScrollView style={styles.scrollView}>
@@ -360,36 +393,33 @@ export default class TextRecognition extends React.Component {
     // });
     return (
       <>
-       {/* <ImageBackground
-      source={require('./your-background-image.jpg')} // Replace with your background image source
-      style={{ flex: 1, resizeMode: 'cover' }} // You can customize the style here
-    > */}
-        <Header />
+        <Header2 />
 
         <ScrollView style={styles.container}>
           <View
             style={{
               backgroundColor: "#1C4C4E",
-              height: 100,
+              height: 80,
               alignItems: "center",
               justifyContent: "center",
             }}
           >
             <Text
               style={{
-                color: "white",
-                fontSize: 30,
+                fontSize: 22,
+                fontFamily: "serif",
                 fontWeight: "bold",
+                color: "white",
+                backgroundColor: "#1C4C4E",
+                paddingTop: 0,
+                padding: 10,
+                textAlign: "center",
               }}
             >
-              Text Recognition
+              Micro-Bio Text Recognition
             </Text>
           </View>
-          <View style={styles.header}>
-            {/* Your app logo or branding */}
-            {/* <Image source={require("./../assets/logo.png")} style={styles.logo} /> */}
-            {/* <Text style={styles.title}>Text Recognition</Text> */}
-          </View>
+          <View style={styles.header}></View>
 
           <Text style={styles.labelText}>Upload Image</Text>
           <View style={styles.imageContainer}>
@@ -410,167 +440,56 @@ export default class TextRecognition extends React.Component {
                 />
               )}
             </TouchableOpacity>
-            {/* <Card style={styles.card}>
+          </View>
+          <View style={{ marginHorizontal: 20, marginTop: scale(40) }}>
+            <View style={{ flexDirection: "row", justifyContent: "center" }}>
               <TouchableOpacity
-                style={styles.chooseImageButton}
+                style={{
+                  borderRadius: 12,
+                  borderColor: "#1C4C4E",
+                  borderWidth: 1,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: 150,
+                  height: 50,
+                }}
                 onPress={this.open_image_option}
               >
-                <Text style={styles.chooseImageText}>Choose Image</Text>
+                <Text style={{ color: "#1C4C4E" }}>Choose Image</Text>
               </TouchableOpacity>
+            </View>
+
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                marginTop: 20,
+              }}
+            >
               <TouchableOpacity
-                style={[
-                  styles.uploadButton,
-                  this.state.loader && styles.disabledButton,
-                ]}
+                style={{
+                  borderRadius: 12,
+                  backgroundColor: "#1C4C4E",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: 150,
+                  height: 50,
+                }}
                 onPress={this.onInsert}
                 disabled={this.state.loader}
               >
                 {this.state.loader ? (
                   <ActivityIndicator size="large" color="#ffffff" />
                 ) : (
-                  <Text style={styles.uploadButtonText}>Upload</Text>
+                  <Text style={{ color: "white" }}>Upload</Text>
                 )}
               </TouchableOpacity>
-              {this.state.result && (
-                <View style={styles.resultContainer}>
-                  <Text style={styles.resultText}>{this.state.resultTxt}</Text>
-                </View>
-              )}
-            </Card> */}
+            </View>
+            {/* {this.state.resultTxt} */}
+            {this.state.result &&
+              this.state.SuccessBottomSheetVisible &&
+              this.state.FailedBottomSheetVisible}
           </View>
-          <View style={{ marginHorizontal: 20, marginTop: scale(50) }}>
-  <View style={{ flexDirection: "row", justifyContent: "center" }}>
-    <TouchableOpacity
-      style={{
-        borderRadius: 12,
-        backgroundColor: "#1C4C4E",
-        alignItems: "center",
-        justifyContent: "center",
-        width: 150,
-        height: 50,
-      }}
-      onPress={this.open_image_option}
-    >
-      <Text style={{ color: "white" }}>Choose Image</Text>
-    </TouchableOpacity>
-  </View>
-  
-  <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 20 }}>
-    <TouchableOpacity
-      style={{
-        borderRadius: 12,
-        backgroundColor: "#1C4C4E",
-        alignItems: "center",
-        justifyContent: "center",
-        width: 150,
-        height: 50,
-      }}
-      onPress={this.onInsert}
-      disabled={this.state.loader}
-    >
-      {this.state.loader ? (
-        <ActivityIndicator size="large" color="#ffffff" />
-      ) : (
-        <Text style={{ color: "white" }}>Upload</Text>
-      )}
-    </TouchableOpacity>
-  </View>
-  
-  {this.state.result && (
-                <View style={styles.resultContainer}>
-                  <Text style={styles.resultText}>{this.state.resultTxt}</Text>
-                </View>
-              )}
-</View>
-
-          <BottomSheet
-            ref={this.bottomSheetRef}
-            index={this.state.zoologyBottomSheetVisible ? 0 : -1}
-            snapPoints={snapPoints}
-            onChange={this.handleSheetChanges}
-            enablePanDownToClose={true}
-            handleComponent={() => <></>}
-            style={{}}
-            backgroundStyle={{
-              borderTopLeftRadius: 26,
-              borderTopRightRadius: 26,
-              borderWidth: 1,
-              borderColor: "black",
-            }}
-          >
-            {/* Zoology Bottom Sheet Content */}
-            
-              <View
-                style={{
-                  flex: 1,
-                  // alignItems: "center",
-                  backgroundColor: "white",
-                  height: 100,
-                  borderTopLeftRadius: 26,
-                  borderTopRightRadius: 26,
-                }}
-              >
-                <Text style={styles.resultText}>{this.state.resultTxt}</Text>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    marginHorizontal: 27,
-                  }}
-                >
-                  <TouchableOpacity
-                    onPress={() =>
-                      this.props.navigation.navigate("AnimalRecognition")
-                    }
-                  >
-                    <View
-                      style={{
-                        backgroundColor: "#1C4C4E",
-                        flexDirection: "row",
-                        width: scale(120),
-                        height: scale(56),
-                        borderRadius: 14,
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Icon
-                        name="camera"
-                        size={20}
-                        style={{ marginRight: 5 }}
-                        color="#fff"
-                      />
-                      <Text style={{ color: "#fff" }}>Scan Now</Text>
-                    </View>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() =>
-                      this.props.navigation.navigate("AnimalRecognitionLesson")
-                    }
-                  >
-                    <View
-                      style={{
-                        backgroundColor: "#28B67E",
-
-                        width: scale(120),
-                        height: scale(56),
-                        borderRadius: 14,
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Icon
-                        name="book"
-                        size={20}
-                        style={{ marginRight: 5 }}
-                        color="#fff"
-                      />
-                      <Text style={{ color: "#fff" }}>Lessons</Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              </View>
-          </BottomSheet>
 
           <AwesomeAlert
             show={showAlert}
@@ -586,7 +505,186 @@ export default class TextRecognition extends React.Component {
             }}
           />
         </ScrollView>
-        {/* </ImageBackground> */}
+        <BottomSheet
+          ref={this.anatomyBottomSheetRef}
+          index={this.state.SuccessBottomSheetVisible ? 0 : -1}
+          snapPoints={snapPoints}
+          onChange={this.handleSheetChanges}
+          enablePanDownToClose={true}
+          handleComponent={() => (
+            <View
+              style={{
+                backgroundColor: "#1C4C4E",
+                height: 8,
+                width: 60,
+                alignSelf: "center",
+                borderRadius: 4,
+                marginTop: 10,
+              }}
+            />
+          )}
+          style={{
+            borderTopLeftRadius: 26,
+            borderTopRightRadius: 26,
+            borderWidth: 1,
+            borderColor: "#28B67E",
+            backgroundColor: "#FFF",
+          }}
+          backgroundStyle={{
+            borderTopLeftRadius: 26,
+            borderTopRightRadius: 26,
+            borderWidth: 1,
+            borderColor: "#28B67E",
+            backgroundColor: "#FFF",
+          }}
+        >
+          <View style={styles.successBottomSheetVisibleContent}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginTop: 20,
+              }}
+            >
+              <Text style={{ fontSize: 24, color: "#28B67E" }}>✓</Text>
+              <Text style={styles.title2}>
+                Hurray, we identified!
+                <Text style={{ color: "gray" }}>{this.state.resultAcc}</Text>
+              </Text>
+            </View>
+            <Text
+              style={{
+                fontWeight: "bold",
+                color: "black",
+                fontSize: 18,
+                marginVertical: 10,
+              }}
+            >
+              {this.state.resultTxt2}
+            </Text>
+            <Text style={styles.description}>
+              Click the button to explore content about the{" "}
+              {this.state.resultTxt2}.
+            </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "flex-end",
+                marginTop: 10,
+              }}
+            >
+              <TouchableOpacity
+                style={styles.lessonButton}
+                onPress={() => {
+                  console.log(this.state.resultTxt);
+                  this.props.navigation.navigate(stackNames.HOME, {
+                    screen: screenNames.RESULTS,
+                    params: {
+                      result: this.state.resultTxt2,
+                      resultMain: this.state.resultTxt,
+                      resultTxt: this.state.resultTxt3,
+                    },
+                  });
+                }}
+              >
+                <View style={styles.buttonInner}>
+                  <Icon
+                    name="book"
+                    size={20}
+                    style={styles.icon}
+                    color="#fff"
+                  />
+                  <Text style={styles.buttonText}>Explore More</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </BottomSheet>
+
+        <BottomSheet
+          ref={this.anatomyBottomSheetRef}
+          index={this.state.FailedBottomSheetVisible ? 0 : -1}
+          snapPoints={snapPoints}
+          onChange={this.handleSheetChanges}
+          enablePanDownToClose={true}
+          handleComponent={() => (
+            <View
+              style={{
+                backgroundColor: "#1C4C4E",
+                height: 8,
+                width: 60,
+                alignSelf: "center",
+                borderRadius: 4,
+                marginTop: 10,
+              }}
+            />
+          )}
+          style={{
+            borderTopLeftRadius: 26,
+            borderTopRightRadius: 26,
+            borderWidth: 1,
+            borderColor: "red",
+            backgroundColor: "#FFF",
+          }}
+          backgroundStyle={{
+            borderTopLeftRadius: 26,
+            borderTopRightRadius: 26,
+            borderWidth: 1,
+            borderColor: "red",
+            backgroundColor: "#FFF",
+          }}
+        >
+          <View style={styles.failedBottomSheetVisibleContent}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginTop: 20,
+              }}
+            >
+              <Text style={{ fontSize: 24, color: "red" }}>✗</Text>
+              <Text style={styles.failedTitle}>
+                Sorry, we couldn't recognize this !
+              </Text>
+            </View>
+            <Text
+              style={{
+                fontWeight: "bold",
+                color: "#808080",
+                fontSize: 14,
+                marginVertical: 10,
+              }}
+            >
+              Please try again with another image
+            </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "flex-end",
+                marginTop: 10,
+              }}
+            >
+              <TouchableOpacity
+                style={styles.scanButton}
+                onPress={() => {
+                  this.setState({ FailedBottomSheetVisible: false }, () => {
+                    this.open_image_option();
+                  }, () => { this.onInsert });
+                }}
+              >
+                <View style={styles.buttonInner}>
+                  <Icon
+                    name="camera"
+                    size={20}
+                    style={styles.icon}
+                    color="#fff"
+                  />
+                  <Text style={styles.buttonText}>Scan Again</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </BottomSheet>
       </>
     );
   }
@@ -684,5 +782,69 @@ const styles = StyleSheet.create({
     height: 200,
     backgroundColor: "#CFDEF2",
     paddingBottom: 20,
+  },
+  successBottomSheetVisibleContent: {
+    flex: 1,
+    backgroundColor: "white",
+    borderTopLeftRadius: 26,
+    borderTopRightRadius: 26,
+    padding: 20,
+  },
+  title2: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#28B67E",
+    marginBottom: 2,
+  },
+  description: {
+    fontSize: 14,
+    marginBottom: 10,
+    marginTop: 10,
+    color: "#D3D3D3",
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  scanButton: {
+    backgroundColor: "#1C4C4E",
+    width: scale(120),
+    height: scale(50),
+    borderRadius: 14,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  lessonButton: {
+    backgroundColor: "#28B67E",
+    width: scale(120),
+    height: scale(50),
+    borderRadius: 14,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttonInner: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  icon: {
+    marginRight: 5,
+  },
+  buttonText: {
+    color: "#fff",
+  },
+  failedBottomSheetVisibleContent: {
+    padding: 20,
+  },
+  failedTitle: {
+    fontSize: 16,
+    color: "red",
+    marginLeft: 10,
+  },
+  retryButton: {
+    backgroundColor: "red",
+    borderRadius: 5,
+    padding: 10,
+    alignItems: "center",
   },
 });
