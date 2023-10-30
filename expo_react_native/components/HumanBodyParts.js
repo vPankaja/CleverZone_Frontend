@@ -1,17 +1,14 @@
 import React from "react";
 import {
   ActivityIndicator,
-  Picker,
   Alert,
   View,
   StyleSheet,
   TouchableOpacity,
   Text,
   Image,
-  Dimensions,
   ScrollView,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import "react-native-gesture-handler";
 import * as ImagePicker from "expo-image-picker";
 import AwesomeAlert from "react-native-awesome-alerts";
@@ -94,29 +91,32 @@ export default class HumanBodyParts extends React.Component {
               this.setState({
                 loader: false,
                 result: true,
-                resultTxt: res.data.bodyparts,
+                resultTxt2: res.data.bodyparts,
                 resultAcc: " Accuracy " + res.data.accuracy + "%",
+                resultTxt:
+                  res.data.bodyparts + " || Accuracy: " + res.data.accuracy,
+                resultTxt3: res.data.text_data,
               });
-  
+
               if (!res.data.error) {
                 this.showSuccessBottomSheet();
-              }else{
+              } else {
                 this.showFailedBottomSheet();
               }
             });
         })
         .catch((error) => {
           console.log(error);
-          this.setState({loader: false});
+          this.setState({ loader: false });
           this.showFailedBottomSheet();
         });
     } catch (err) {
       console.log(err);
-      this.setState({loader: false});
+      this.setState({ loader: false });
       this.showFailedBottomSheet();
     }
   };
-  
+
   showSuccessBottomSheet() {
     this.setState({
       SuccessBottomSheetVisible: true,
@@ -127,10 +127,10 @@ export default class HumanBodyParts extends React.Component {
   showFailedBottomSheet() {
     this.setState({
       FailedBottomSheetVisible: true,
-      SuccessBottomSheetVisible: false, 
+      SuccessBottomSheetVisible: false,
     });
   }
-  
+
   handleSheetChanges = (index) => {
     if (index === -1) {
       this.setState({
@@ -151,7 +151,6 @@ export default class HumanBodyParts extends React.Component {
       this.showAlert();
     }
   };
-  
 
   showAlert = () => {
     this.setState({
@@ -217,158 +216,6 @@ export default class HumanBodyParts extends React.Component {
     const { showAlert } = this.state;
     const snapPoints = ["35%", "25%"];
 
-    //     return (
-    //       <ScrollView style={styles.scrollView}>
-    //         <View style={styles.container}>
-    //           <View style={styles.center}>
-    //             <Image
-    //               source={require("./../assets/logo.png")}
-    //               style={{
-    //                 width: 150,
-    //                 height: 150,
-    //                 marginBottom: 20,
-    //                 marginTop: 10,
-    //               }}
-    //             />
-    //           </View>
-
-    //           <Text style={styles.labelText}>Upload Image:</Text>
-    //           <View style={styles.center}>
-    //             <TouchableOpacity
-    //               onPress={this.open_image_option}
-    //               style={{
-    //                 width: 80 + "%",
-    //                 height: Dimensions.get("window").width * 0.8,
-    //                 borderWidth: 1,
-    //                 marginBottom: 10,
-    //                 marginTop: 10,
-    //                 borderColor: "#c4c4c4",
-    //               }}
-    //             >
-    //               <View>
-    //                 <Image
-    //                   source={{ uri: this.state.localUri }}
-    //                   style={{ width: 100 + "%", height: 100 + "%" }}
-    //                 />
-    //               </View>
-    //             </TouchableOpacity>
-    //             <TouchableOpacity
-    //               style={[
-    //                 styles.buttonContainer,
-    //                 styles.registerButton,
-    //                 { width: 50 + "%" },
-    //               ]}
-    //               onPress={this.open_image_option}
-    //             >
-    //               <Text style={{ color: "#ffffff", fontWeight: "bold" }}>
-    //                 Choose Image
-    //               </Text>
-    //             </TouchableOpacity>
-    //           </View>
-
-    //           <View style={styles.center}>
-    //             <TouchableOpacity
-    //               style={[styles.buttonContainer, styles.loginButton]}
-    //               onPress={this.onInsert}
-    //             >
-    //               {!this.state.loader ? (
-    //                 <Text style={{ color: "#ffffff", fontWeight: "bold" }}>
-    //                   Upload
-    //                 </Text>
-    //               ) : null}
-    //               {this.state.loader ? (
-    //                 <ActivityIndicator size="large" color={"#ffffff"} />
-    //               ) : null}
-    //             </TouchableOpacity>
-    //           </View>
-    //           {this.state.result == true
-    //             ? [
-    //                 <View style={styles.center}>
-    //                   <View>
-    //                     <Text style={{ fontWeight: "bold", fontSize: 18 }}>
-    //                       {this.state.resultTxt}
-    //                     </Text>
-    //                   </View>
-    //                 </View>,
-    //               ]
-    //             : null}
-
-    //           <AwesomeAlert
-    //             show={showAlert}
-    //             title={this.state.title}
-    //             message={this.state.message}
-    //             closeOnTouchOutside={true}
-    //             closeOnHardwareBackPress={false}
-    //             showCancelButton={true}
-    //             cancelText="Close"
-    //             cancelButtonColor="#AEDEF4"
-    //             onCancelPressed={() => {
-    //               this.hideAlert();
-    //             }}
-    //           />
-    //         </View>
-    //       </ScrollView>
-    //     );
-    //   }
-    // }
-
-    // const styles = StyleSheet.create({
-    //   container: {
-    //     flex: 1,
-    //     backgroundColor: "#ffffff",
-    //   },
-    //   center: {
-    //     alignItems: "center",
-    //   },
-    //   labelText: {
-    //     fontWeight: "bold",
-    //     fontSize: 14,
-    //     marginLeft: 10 + "%",
-    //   },
-    //   firstLabelText: {
-    //     fontWeight: "bold",
-    //     fontSize: 14,
-    //     marginLeft: 10 + "%",
-    //     marginTop: 2 + "%",
-    //   },
-    //   input: {
-    //     borderBottomWidth: 1,
-    //     width: 80 + "%",
-    //     height: 45,
-    //     marginBottom: 20,
-    //     flexDirection: "row",
-    //     alignItems: "center",
-    //     borderBottomColor: "#c4c4c4",
-    //     color: "#000000",
-    //   },
-    //   TextInputStyleClass: {
-    //     borderBottomWidth: 1,
-    //     width: 80 + "%",
-    //     height: 100,
-    //     marginBottom: 20,
-    //     flexDirection: "row",
-    //     alignItems: "center",
-    //     marginLeft: 4,
-    //     borderBottomColor: "#c4c4c4",
-    //     color: "#000000",
-    //   },
-    //   buttonContainer: {
-    //     flexDirection: "row",
-    //     justifyContent: "center",
-    //     alignItems: "center",
-    //     marginBottom: 10,
-    //     width: 80 + "%",
-    //     height: 40,
-    //     borderRadius: 60,
-    //   },
-    //   loginButton: {
-    //     backgroundColor: "#131d41",
-    //   },
-    //   registerButton: {
-    //     backgroundColor: "#4ff47c",
-    //   },
-    // });
-
     return (
       <>
         <Header2 />
@@ -397,8 +244,7 @@ export default class HumanBodyParts extends React.Component {
               Human Body Parts Recognition
             </Text>
           </View>
-          <View style={styles.header}>
-          </View>
+          <View style={styles.header}></View>
 
           <Text style={styles.labelText}>Upload Image</Text>
           <View style={styles.imageContainer}>
@@ -463,12 +309,12 @@ export default class HumanBodyParts extends React.Component {
                   <Text style={{ color: "white" }}>Upload</Text>
                 )}
               </TouchableOpacity>
-            </View> 
+            </View>
             {/* {this.state.resultTxt} */}
-            {this.state.result && this.state.SuccessBottomSheetVisible && this.state.FailedBottomSheetVisible }
+            {this.state.result &&
+              this.state.SuccessBottomSheetVisible &&
+              this.state.FailedBottomSheetVisible}
           </View>
-
-          
 
           <AwesomeAlert
             show={showAlert}
@@ -485,130 +331,185 @@ export default class HumanBodyParts extends React.Component {
           />
         </ScrollView>
         <BottomSheet
-  ref={this.anatomyBottomSheetRef}
-  index={this.state.SuccessBottomSheetVisible ? 0 : -1}
-  snapPoints={snapPoints}
-  onChange={this.handleSheetChanges}
-  enablePanDownToClose={true}
-  handleComponent={() => (
-    <View
-      style={{
-        backgroundColor: "#1C4C4E",
-        height: 8,
-        width: 60,
-        alignSelf: "center",
-        borderRadius: 4,
-        marginTop: 10,
-      }}
-    />
-  )}
-  style={{
-    borderTopLeftRadius: 26,
-    borderTopRightRadius: 26,
-    borderWidth: 1,
-    borderColor: "#28B67E", 
-    backgroundColor: "#FFF", 
-  }}
-  backgroundStyle={{
-    borderTopLeftRadius: 26,
-    borderTopRightRadius: 26,
-    borderWidth: 1,
-    borderColor: "#28B67E", 
-    backgroundColor: "#FFF", 
-  }}
->
-  <View style={styles.successBottomSheetVisibleContent}>
-    <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
-      <Text style={{ fontSize: 24, color: '#28B67E' }}>✓</Text>
-      <Text style={styles.title2}>
-        Hurray, we identified!
-        <Text style={{ color: 'gray' }}>{this.state.resultAcc}</Text>
-      </Text>
-    </View>
-    <Text style={{ fontWeight: 'bold', color: 'black', fontSize: 18, marginVertical: 10 }}>
-      {this.state.resultTxt}
-    </Text>
-    <Text style={styles.description}>
-      Click the button to explore content about the {this.state.resultTxt}.
-    </Text>
-    <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 10 }}>
-      <TouchableOpacity
-        style={styles.lessonButton}
-        onPress={() => this.props.navigation.navigate("Results")}
-      >
-        <View style={styles.buttonInner}>
-          <Icon name="book" size={20} style={styles.icon} color="#fff" />
-          <Text style={styles.buttonText}>Explore More</Text>
-        </View>
-      </TouchableOpacity>
-    </View>
-  </View>
-</BottomSheet>
+          ref={this.anatomyBottomSheetRef}
+          index={this.state.SuccessBottomSheetVisible ? 0 : -1}
+          snapPoints={snapPoints}
+          onChange={this.handleSheetChanges}
+          enablePanDownToClose={true}
+          handleComponent={() => (
+            <View
+              style={{
+                backgroundColor: "#1C4C4E",
+                height: 8,
+                width: 60,
+                alignSelf: "center",
+                borderRadius: 4,
+                marginTop: 10,
+              }}
+            />
+          )}
+          style={{
+            borderTopLeftRadius: 26,
+            borderTopRightRadius: 26,
+            borderWidth: 1,
+            borderColor: "#28B67E",
+            backgroundColor: "#FFF",
+          }}
+          backgroundStyle={{
+            borderTopLeftRadius: 26,
+            borderTopRightRadius: 26,
+            borderWidth: 1,
+            borderColor: "#28B67E",
+            backgroundColor: "#FFF",
+          }}
+        >
+          <View style={styles.successBottomSheetVisibleContent}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginTop: 20,
+              }}
+            >
+              <Text style={{ fontSize: 24, color: "#28B67E" }}>✓</Text>
+              <Text style={styles.title2}>
+                Hurray, we identified!
+                <Text style={{ color: "gray" }}>{this.state.resultAcc}</Text>
+              </Text>
+            </View>
+            <Text
+              style={{
+                fontWeight: "bold",
+                color: "black",
+                fontSize: 18,
+                marginVertical: 10,
+              }}
+            >
+              {this.state.resultTxt2}
+            </Text>
+            <Text style={styles.description}>
+              Click the button to explore content about the{" "}
+              {this.state.resultTxt2}.
+            </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "flex-end",
+                marginTop: 10,
+              }}
+            >
+              <TouchableOpacity
+                style={styles.lessonButton}
+                onPress={() => {
+                  console.log(this.state.resultTxt);
+                  this.props.navigation.navigate(stackNames.HOME, {
+                    screen: screenNames.RESULTS,
+                    params: {
+                      result: this.state.resultTxt2,
+                      resultMain: this.state.resultTxt,
+                      resultTxt: this.state.resultTxt3,
+                    },
+                  });
+                }}
+              >
+                <View style={styles.buttonInner}>
+                  <Icon
+                    name="book"
+                    size={20}
+                    style={styles.icon}
+                    color="#fff"
+                  />
+                  <Text style={styles.buttonText}>Explore More</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </BottomSheet>
 
-<BottomSheet
-  ref={this.anatomyBottomSheetRef}
-  index={this.state.FailedBottomSheetVisible ? 0 : -1}
-  snapPoints={snapPoints}
-  onChange={this.handleSheetChanges}
-  enablePanDownToClose={true}
-  handleComponent={() => (
-    <View
-      style={{
-        backgroundColor: "#1C4C4E",
-        height: 8,
-        width: 60,
-        alignSelf: "center",
-        borderRadius: 4,
-        marginTop: 10,
-      }}
-    />
-  )}
-  style={{
-    borderTopLeftRadius: 26,
-    borderTopRightRadius: 26,
-    borderWidth: 1,
-    borderColor: "red", 
-    backgroundColor: "#FFF", 
-  }}
-  backgroundStyle={{
-    borderTopLeftRadius: 26,
-    borderTopRightRadius: 26,
-    borderWidth: 1,
-    borderColor: "red", 
-    backgroundColor: "#FFF", 
-  }}
->
-  <View style={styles.failedBottomSheetVisibleContent}>
-    <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
-      <Text style={{ fontSize: 24, color: 'red' }}>✗</Text> 
-      <Text style={styles.failedTitle}>
-        Sorry, we couldn't recognize this !
-      </Text>
-    </View>
-    <Text style={{ fontWeight: 'bold', color: '#808080', fontSize: 14, marginVertical: 10 }}>
-    Please try again with another image
-    </Text>
-    <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 10 }}>
-    <TouchableOpacity
-  style={styles.scanButton}
-  onPress={() => {
-    this.setState({ FailedBottomSheetVisible: false }, () => {
-      this.open_image_option();
-    });
-  }}
->
-<View style={styles.buttonInner}>
-          <Icon name="camera" size={20} style={styles.icon} color="#fff" />
-          <Text style={styles.buttonText}>Scan Again</Text>
-        </View>
-</TouchableOpacity>
-
-    </View>
-  </View>
-</BottomSheet>
-
-
-
+        <BottomSheet
+          ref={this.anatomyBottomSheetRef}
+          index={this.state.FailedBottomSheetVisible ? 0 : -1}
+          snapPoints={snapPoints}
+          onChange={this.handleSheetChanges}
+          enablePanDownToClose={true}
+          handleComponent={() => (
+            <View
+              style={{
+                backgroundColor: "#1C4C4E",
+                height: 8,
+                width: 60,
+                alignSelf: "center",
+                borderRadius: 4,
+                marginTop: 10,
+              }}
+            />
+          )}
+          style={{
+            borderTopLeftRadius: 26,
+            borderTopRightRadius: 26,
+            borderWidth: 1,
+            borderColor: "red",
+            backgroundColor: "#FFF",
+          }}
+          backgroundStyle={{
+            borderTopLeftRadius: 26,
+            borderTopRightRadius: 26,
+            borderWidth: 1,
+            borderColor: "red",
+            backgroundColor: "#FFF",
+          }}
+        >
+          <View style={styles.failedBottomSheetVisibleContent}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginTop: 20,
+              }}
+            >
+              <Text style={{ fontSize: 24, color: "red" }}>✗</Text>
+              <Text style={styles.failedTitle}>
+                Sorry, we couldn't recognize this !
+              </Text>
+            </View>
+            <Text
+              style={{
+                fontWeight: "bold",
+                color: "#808080",
+                fontSize: 14,
+                marginVertical: 10,
+              }}
+            >
+              Please try again with another image
+            </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "flex-end",
+                marginTop: 10,
+              }}
+            >
+              <TouchableOpacity
+                style={styles.scanButton}
+                onPress={() => {
+                  this.setState({ FailedBottomSheetVisible: false }, () => {
+                    this.open_image_option();
+                  }, () => { this.onInsert });
+                }}
+              >
+                <View style={styles.buttonInner}>
+                  <Icon
+                    name="camera"
+                    size={20}
+                    style={styles.icon}
+                    color="#fff"
+                  />
+                  <Text style={styles.buttonText}>Scan Again</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </BottomSheet>
       </>
     );
   }
@@ -712,19 +613,19 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderTopLeftRadius: 26,
     borderTopRightRadius: 26,
-    padding: 20, 
+    padding: 20,
   },
   title2: {
-    fontSize: 16, 
+    fontSize: 16,
     fontWeight: "bold",
-    color: "#28B67E", 
-    marginBottom: 2, 
+    color: "#28B67E",
+    marginBottom: 2,
   },
   description: {
-    fontSize: 14, 
-    marginBottom: 10, 
-    marginTop:10,
-    color:"#D3D3D3"
+    fontSize: 14,
+    marginBottom: 10,
+    marginTop: 10,
+    color: "#D3D3D3",
   },
   buttonContainer: {
     flexDirection: "row",
@@ -762,13 +663,13 @@ const styles = StyleSheet.create({
   },
   failedTitle: {
     fontSize: 16,
-    color: 'red',
+    color: "red",
     marginLeft: 10,
   },
   retryButton: {
-    backgroundColor: 'red',
+    backgroundColor: "red",
     borderRadius: 5,
     padding: 10,
-    alignItems: 'center',
+    alignItems: "center",
   },
 });

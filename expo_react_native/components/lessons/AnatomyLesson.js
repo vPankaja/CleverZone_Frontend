@@ -75,20 +75,7 @@ export default class AnatomyLesson extends Component {
             <Text style={styles.questionText}>Define Human Anatomy</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={() =>
-              this.showModal(
-                "Forms of Bacteria ",
-                "1. Spherical- Cocci 2. Rod-shaped- Bacilli 3. Spiral bacteria 4. Comma shaped- Vibrio",
-                require("../../assets/forms.jpg")
-              )
-            }
-          >
-            <Text style={styles.questionText}>
-              Bacterial is a type of Micro- organism having different
-              morphological forms.{" "}
-            </Text>
-          </TouchableOpacity>
+          
           <TouchableOpacity
             onPress={() =>
               this.showModal(

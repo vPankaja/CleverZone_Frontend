@@ -21,6 +21,7 @@ import Image9 from "./../assets/WHALE.png";
 import AwesomeAlert from "react-native-awesome-alerts";
 import { stackNames } from "../constants/navConsts/stackNames";
 import { screenNames } from "../constants/navConsts/screenNames";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 export default class Results extends React.Component {
   constructor(props) {
