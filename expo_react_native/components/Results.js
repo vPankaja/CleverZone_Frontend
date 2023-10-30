@@ -21,6 +21,7 @@ import Image9 from "./../assets/WHALE.png";
 import AwesomeAlert from "react-native-awesome-alerts";
 import { stackNames } from "../constants/navConsts/stackNames";
 import { screenNames } from "../constants/navConsts/screenNames";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 export default class Results extends React.Component {
   constructor(props) {
@@ -135,9 +136,9 @@ export default class Results extends React.Component {
           <Image
             source={{ uri: this.state.imageUri }}
             style={{
-              width: 150,
-              height: 150,
-              marginBottom: 50,
+              width: 300,
+              height: 200,
+              marginBottom: 10,
               marginTop: 10,
               borderRadius: 14,
             }}
@@ -200,7 +201,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    height: 50,
+    height: 80,
     backgroundColor: "#1C4C4E",
     paddingLeft: 20,
     paddingRight: 20,
@@ -259,5 +260,6 @@ const styles = StyleSheet.create({
   search: {
     marginTop: 10,
     marginLeft: 10,
+    height: 40,
   },
 });
