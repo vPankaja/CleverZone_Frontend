@@ -66,15 +66,15 @@ export default class AnatomyLesson extends Component {
           <TouchableOpacity
             onPress={() =>
               this.showModal(
-                "Microbiology?",
-                "Microbiology is the study of all living organisms that are too small to be visible with the naked eye. This includes bacteria, archaea, viruses, fungi, prions, protozoa and algae, collectively known as 'microbes'.",
-                require("../../assets/microbio.jpg")
+                "What is Human Anatomy?",
+                "Human anatomy is the study of the structure of the human body. It involves the examination of the organs, tissues, bones, and systems that make up the human organism.",
+                require("../../assets/humananatomy.jpg")
               )
             }
           >
-            <Text style={styles.questionText}>Define Microbiology. </Text>
+            <Text style={styles.questionText}>Define Human Anatomy</Text>
           </TouchableOpacity>
-          {/* Add more questions here */}
+
           <TouchableOpacity
             onPress={() =>
               this.showModal(
@@ -92,35 +92,79 @@ export default class AnatomyLesson extends Component {
           <TouchableOpacity
             onPress={() =>
               this.showModal(
-                "Structure of a Virus.",
-                "In the simpler viruses the virion consists of a single molecule of nucleic acid surrounded by a protein coat, the capsid; the capsid and its enclosed nucleic acid together constitute the nucleocapsid.",
-                require("../../assets/virus.jpg")
+                "Function of the Skeletal System",
+                "The skeletal system provides structural support to the body, protects internal organs, and allows for movement. It also stores minerals and produces blood cells."
               )
             }
           >
-            <Text style={styles.questionText}> Structure of a Virus.</Text>
+            <Text style={styles.questionText}>
+              Function of the Skeletal System
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() =>
               this.showModal(
-                "Cynobacteria.",
-                "Cyanobacteria, also called Cyanobacteriota or Cyanophyta, are a phylum of gram-negative bacteria that obtain energy via photosynthesis",
-                require("../../assets/cyno.jpg")
+                "Function of the Eye",
+                "The human eye functions by capturing light, which is then focused on the retina. Photoreceptor cells in the retina convert this light into electrical signals that are transmitted through the optic nerve to the brain. This allows us to perceive visual information from the surrounding environment.",
+                require("../../assets/eye.png")
               )
             }
           >
-            <Text style={styles.questionText}>Cynobacteria.</Text>
+            <Text style={styles.questionText}>Function of the Eye</Text>
           </TouchableOpacity>
+
           <TouchableOpacity
             onPress={() =>
               this.showModal(
-                "Application of Microbes.",
-                "The fertilisation of the land, the production of fodder for cattle, compost heaps. These are all traditional applications of microbes on the farm. Without microbes, plants grow badly or not at all, and agriculture would be impossible. We use microbes more and more frequently to increase crop yields.",
-                require("../../assets/uses.png")
+                "Role of the Circulatory System",
+                "The circulatory system, including the heart and blood vessels, is responsible for transporting blood throughout the body. It delivers oxygen and nutrients to cells and removes waste products."
               )
             }
           >
-            <Text style={styles.questionText}>Applications of Microbes.</Text>
+            <Text style={styles.questionText}>
+              Role of the Circulatory System
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() =>
+              this.showModal(
+                "Function of the Digestive System",
+                "The digestive system processes and breaks down food, extracting nutrients and energy. It consists of organs like the stomach, small intestine, and large intestine."
+              )
+            }
+          >
+            <Text style={styles.questionText}>
+              Function of the Digestive System
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() =>
+              this.showModal(
+                "Role of the Respiratory System",
+                "The respiratory system allows the exchange of oxygen and carbon dioxide in the body. It includes the lungs, bronchi, and trachea.",
+                require("../../assets/respiratory.jpg")
+              )
+            }
+          >
+            <Text style={styles.questionText}>
+              Role of the Respiratory System
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() =>
+              this.showModal(
+                "Function of the Nervous System",
+                "The nervous system controls and coordinates all body functions. It includes the brain, spinal cord, and nerves that transmit signals between cells.",
+                require("../../assets/nervous.png")
+              )
+            }
+          >
+            <Text style={styles.questionText}>
+              Function of the Nervous System
+            </Text>
           </TouchableOpacity>
         </View>
 

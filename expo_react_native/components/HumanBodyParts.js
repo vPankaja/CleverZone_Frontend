@@ -16,7 +16,6 @@ import "react-native-gesture-handler";
 import * as ImagePicker from "expo-image-picker";
 import AwesomeAlert from "react-native-awesome-alerts";
 import axios from "axios";
-import Header from "./header";
 import LocalIP from "./localIPAddress";
 import BottomSheet from "@gorhom/bottom-sheet";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -39,6 +38,8 @@ export default class HumanBodyParts extends React.Component {
       result: false,
       title: "",
       loader: false,
+      SuccessBottomSheetVisible: false,
+      FailedBottomSheetVisible: false,
     };
   }
 
@@ -93,49 +94,61 @@ export default class HumanBodyParts extends React.Component {
               this.setState({
                 loader: false,
                 result: true,
-                resultTxt:
-                  res.data.bodyparts,
-
-                  resultAcc:
-                  " Accuracy " + res.data.accuracy + "%",
-                  // resultTxt:
-                  // res.data.bodyparts + " || Accuracy: " + res.data.accuracy,
+                resultTxt: res.data.bodyparts,
+                resultAcc: " Accuracy " + res.data.accuracy + "%",
               });
-              // this.props.navigation.navigate(stackNames.HOME, {
-              //   screen: screenNames.RESULTS,
-              //   params: {
-              //     result: res.data.bodyparts,
-              //     resultMain:
-              //       res.data.bodyparts + " || Accuracy: " + res.data.accuracy,
-              //     resultTxt: res.data.text_data,
-              //   },
-              // });
+  
+              if (!res.data.error) {
+                this.showSuccessBottomSheet();
+              }else{
+                this.showFailedBottomSheet();
+              }
             });
         })
         .catch((error) => {
           console.log(error);
+          this.setState({loader: false});
+          this.showFailedBottomSheet();
         });
     } catch (err) {
       console.log(err);
+      this.setState({loader: false});
+      this.showFailedBottomSheet();
+    }
+  };
+  
+  showSuccessBottomSheet() {
+    this.setState({
+      SuccessBottomSheetVisible: true,
+      FailedBottomSheetVisible: false,
+    });
+  }
+
+  showFailedBottomSheet() {
+    this.setState({
+      FailedBottomSheetVisible: true,
+      SuccessBottomSheetVisible: false, 
+    });
+  }
+  
+  handleSheetChanges = (index) => {
+    if (index === -1) {
+      this.setState({
+        SuccessBottomSheetVisible: false,
+        FailedBottomSheetVisible: false,
+      });
     }
   };
 
   onInsert = async (e) => {
     if (this.state.localUri != "") {
       this.setState({ loader: true });
-  
       this.setState({ SuccessBottomSheetVisible: false });
-  
+      this.setState({ FailedBottomSheetVisible: false });
       await this.uploadImage(this.state.localUri);
     } else {
       this.setState({ title: "Required!", message: "Please choose an image!" });
       this.showAlert();
-    }
-  
-    if (this.state.result) {
-      this.setState({ SuccessBottomSheetVisible: true });
-    } else {
-      this.setState({ FailedBottomSheetVisible: true });
     }
   };
   
@@ -452,7 +465,7 @@ export default class HumanBodyParts extends React.Component {
               </TouchableOpacity>
             </View> 
             {/* {this.state.resultTxt} */}
-            {this.state.result && this.state.SuccessBottomSheetVisible}
+            {this.state.result && this.state.SuccessBottomSheetVisible && this.state.FailedBottomSheetVisible }
           </View>
 
           
@@ -493,15 +506,15 @@ export default class HumanBodyParts extends React.Component {
     borderTopLeftRadius: 26,
     borderTopRightRadius: 26,
     borderWidth: 1,
-    borderColor: "#28B67E", // Green color
-    backgroundColor: "#FFF", // White background
+    borderColor: "#28B67E", 
+    backgroundColor: "#FFF", 
   }}
   backgroundStyle={{
     borderTopLeftRadius: 26,
     borderTopRightRadius: 26,
     borderWidth: 1,
-    borderColor: "#28B67E", // Green color
-    backgroundColor: "#FFF", // White background
+    borderColor: "#28B67E", 
+    backgroundColor: "#FFF", 
   }}
 >
   <View style={styles.successBottomSheetVisibleContent}>
@@ -521,7 +534,7 @@ export default class HumanBodyParts extends React.Component {
     <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 10 }}>
       <TouchableOpacity
         style={styles.lessonButton}
-        onPress={() => this.props.navigation.navigate("AnatomyLesson")}
+        onPress={() => this.props.navigation.navigate("Results")}
       >
         <View style={styles.buttonInner}>
           <Icon name="book" size={20} style={styles.icon} color="#fff" />
@@ -531,6 +544,69 @@ export default class HumanBodyParts extends React.Component {
     </View>
   </View>
 </BottomSheet>
+
+<BottomSheet
+  ref={this.anatomyBottomSheetRef}
+  index={this.state.FailedBottomSheetVisible ? 0 : -1}
+  snapPoints={snapPoints}
+  onChange={this.handleSheetChanges}
+  enablePanDownToClose={true}
+  handleComponent={() => (
+    <View
+      style={{
+        backgroundColor: "#1C4C4E",
+        height: 8,
+        width: 60,
+        alignSelf: "center",
+        borderRadius: 4,
+        marginTop: 10,
+      }}
+    />
+  )}
+  style={{
+    borderTopLeftRadius: 26,
+    borderTopRightRadius: 26,
+    borderWidth: 1,
+    borderColor: "red", 
+    backgroundColor: "#FFF", 
+  }}
+  backgroundStyle={{
+    borderTopLeftRadius: 26,
+    borderTopRightRadius: 26,
+    borderWidth: 1,
+    borderColor: "red", 
+    backgroundColor: "#FFF", 
+  }}
+>
+  <View style={styles.failedBottomSheetVisibleContent}>
+    <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
+      <Text style={{ fontSize: 24, color: 'red' }}>✗</Text> 
+      <Text style={styles.failedTitle}>
+        Sorry, we couldn't recognize this !
+      </Text>
+    </View>
+    <Text style={{ fontWeight: 'bold', color: '#808080', fontSize: 14, marginVertical: 10 }}>
+    Please try again with another image
+    </Text>
+    <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 10 }}>
+    <TouchableOpacity
+  style={styles.scanButton}
+  onPress={() => {
+    this.setState({ FailedBottomSheetVisible: false }, () => {
+      this.open_image_option();
+    });
+  }}
+>
+<View style={styles.buttonInner}>
+          <Icon name="camera" size={20} style={styles.icon} color="#fff" />
+          <Text style={styles.buttonText}>Scan Again</Text>
+        </View>
+</TouchableOpacity>
+
+    </View>
+  </View>
+</BottomSheet>
+
 
 
       </>
@@ -681,5 +757,18 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
   },
-  
+  failedBottomSheetVisibleContent: {
+    padding: 20,
+  },
+  failedTitle: {
+    fontSize: 16,
+    color: 'red',
+    marginLeft: 10,
+  },
+  retryButton: {
+    backgroundColor: 'red',
+    borderRadius: 5,
+    padding: 10,
+    alignItems: 'center',
+  },
 });
