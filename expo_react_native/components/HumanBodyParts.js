@@ -403,7 +403,7 @@ export default class HumanBodyParts extends React.Component {
                 onPress={() => {
                   console.log(this.state.resultTxt);
                   this.props.navigation.navigate(stackNames.HOME, {
-                    screen: screenNames.RESULTS,
+                    screen: screenNames.ANATOMY_RESULTS,
                     params: {
                       result: this.state.resultTxt2,
                       resultMain: this.state.resultTxt,

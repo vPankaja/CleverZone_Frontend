@@ -80,12 +80,25 @@ export default class AnatomyLesson extends Component {
             onPress={() =>
               this.showModal(
                 "Function of the Skeletal System",
-                "The skeletal system provides structural support to the body, protects internal organs, and allows for movement. It also stores minerals and produces blood cells."
+                "The skeletal system provides structural support to the body, protects internal organs, and allows for movement. It also stores minerals and produces blood cells.",
+                require("../../assets/skeletal.png")
               )
             }
           >
             <Text style={styles.questionText}>
               Function of the Skeletal System
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() =>
+              this.showModal(
+                "Function of the Skeletal System",
+                "Tidal volume (TV): This is the volume of air passing into and out of the lung with cach breath during normal breathing. On average it is about 500 ml in a resting adult human.Inspiratory reserve volume (IRV): This is the extra volume of air that can be forcibly inhaled beyond the tidal volume.Expiratory reserve volume (ERV): The extra volume of air which can be forcibly expelled from the lungs after a normal expiration.Residual volume (RV): The volume of air that remains in the lungs even after forceful expiration. This is on average is about 1,200 ml."
+              )
+            }
+          >
+            <Text style={styles.questionText}>
+            Respiratory cycle and lung volumes and capacities
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -117,7 +130,8 @@ export default class AnatomyLesson extends Component {
             onPress={() =>
               this.showModal(
                 "Function of the Digestive System",
-                "The digestive system processes and breaks down food, extracting nutrients and energy. It consists of organs like the stomach, small intestine, and large intestine."
+                "The digestive system processes and breaks down food, extracting nutrients and energy. It consists of organs like the stomach, small intestine, and large intestine.",
+                require("../../assets/digestive.png")
               )
             }
           >

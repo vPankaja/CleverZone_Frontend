@@ -12,7 +12,7 @@ import AnimalRecognition from '../../components/AnimalRecognition';
 import DashBoard from '../../components/DashBoard';
 import Results from '../../components/Results';
 import Chat from '../../components/Chat';
-
+import AnatomyResults from '../../components/AnatomyResults';
 
 const HomeStackNav = createNativeStackNavigator();
 
@@ -49,6 +49,11 @@ const HomeStack = () => {
        <HomeStackNav.Screen
         name={screenNames.CHAT}
         component={Chat}
+        options={navConfig}
+      />
+      <HomeStackNav.Screen
+        name={screenNames.ANATOMY_RESULTS}
+        component={AnatomyResults}
         options={navConfig}
       />
     </HomeStackNav.Navigator>

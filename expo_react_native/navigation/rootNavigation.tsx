@@ -14,7 +14,7 @@ import TextRecognitionLesson from "../components/lessons/textRecognitionLesson";
 import AnatomyLesson from "../components/lessons/AnatomyLesson";
 import AnimalRecognitionLesson from "../components/lessons/animalRecognitionLesson";
 import Results from "../components/Results";
-
+import AnatomyResults from "../components/AnatomyResults";
 
 const RootNavigation = () => {
   const RootStackNav = createNativeStackNavigator();
@@ -91,6 +91,15 @@ const RootNavigation = () => {
           <RootStackNav.Screen
           name="Results"
           component={Results}
+
+          options={{
+            headerShown: false,
+          }}
+        />
+
+        <RootStackNav.Screen
+          name="AnatomyResults"
+          component={AnatomyResults}
 
           options={{
             headerShown: false,

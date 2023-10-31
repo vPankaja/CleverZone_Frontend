@@ -8,5 +8,6 @@ export const screenNames = {
     DASHBOARD: 'DASHBOARD',
     RESULTS:"RESULTS",
     CHAT:"CHAT",
+    ANATOMY_RESULTS: "ANATOMY_RESULTS",
 
 };
