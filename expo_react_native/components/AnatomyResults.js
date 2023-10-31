@@ -159,34 +159,48 @@ export default class AnatomyResults extends React.Component {
           </View>
 
           {this.state.results === "Heart" && (
-            <View>
-              <Text style={{ fontWeight: "bold", fontSize: 17, marginBottom: 10, marginTop: 10 }}>
-                Heart Internal Appearance
-              </Text>
-              <Image source={require("../assets/HI.png")} style={styles.hdiamge} />
-              <Text style={{ fontWeight: "bold", fontSize: 17, marginBottom: 10, marginTop: 10}}>
-                Heart External Appearance
-              </Text>
-              <Image source={require("../assets/EA.png")} style={styles.hdiamge} />
-              <Text style={{ fontWeight: "bold", fontSize: 17, marginBottom: 10, marginTop: 10}}>
-                Conducting System of the Heart 
-              </Text>
-              <Image source={require("../assets/CS.png")} style={styles.hdiamge} />
+  <View>
+    <Text style={{ fontWeight: "bold", fontSize: 17, marginBottom: 10, marginHorizontal:30,marginTop: 10 }}>
+      Heart Internal Appearance
+    </Text>
+    <Image source={require("../assets/HI.png")} style={styles.hdiamge} />
+    <Text style={{ fontSize: 14, lineHeight: 20, marginLeft: 25, marginRight: 25, marginTop: 10 }}>
+    The internal structure of the heart is a marvel of precision and function. It consists of four chambers: two atria and two ventricles. The right atrium receives deoxygenated blood from the body through the superior and inferior vena cava, while the left atrium receives oxygenated blood from the lungs. As blood flows from the atria into the ventricles, the heart's muscular walls contract, pumping the blood out through the aorta to supply the entire body with oxygen. Valves, such as the mitral and tricuspid valves, play a crucial role in preventing backflow and ensuring a unidirectional flow of blood. The heart's internal design, with its synchronized contractions and precise control of blood flow, is essential for maintaining a healthy circulatory system.</Text>
+    <Text style={{ fontWeight: "bold", fontSize: 17, marginBottom: 10,marginHorizontal:30, marginTop: 10 }}>
+      Heart External Appearance
+    </Text>
+    <Image source={require("../assets/EA.png")} style={styles.hdiamge} />
+    <Text style={{ fontSize: 14, lineHeight: 20, marginLeft: 25, marginRight: 25, marginTop: 10 }}>
+      The external appearance of the heart is a remarkable organ, roughly the size of a clenched fist, nestled within the chest cavity. The aorta, the largest artery in the body, emerges from the top of the heart, serving as the main conduit to distribute oxygenated blood to the rest of the body. The superior vena cava, a large vein, enters the heart from above, carrying deoxygenated blood from the upper part of the body. On the right side of the heart, the right pulmonary artery extends to transport deoxygenated blood to the lungs for oxygenation. The heart's intricate network of vessels and chambers work tirelessly to maintain the body's circulation, ensuring the continuous flow of oxygen-rich blood to sustain life.
+    </Text>
+    <Text style={{ fontWeight: "bold", fontSize: 17, marginBottom: 10,marginHorizontal:30, marginTop: 10 }}>
+      Conducting System of the Heart
+    </Text>
+    <Image source={require("../assets/CS.png")} style={styles.hdiamge} />
+    <Text style={{ fontSize: 14, lineHeight: 20, marginLeft: 25, marginRight: 25, marginTop: 10 }}>
+    The conducting system of the heart is a network of specialized cardiac muscle cells that coordinates and regulates the heartbeat. It includes the sinoatrial (SA) node, often referred to as the heart's natural pacemaker, which initiates electrical impulses to start each heartbeat. These impulses travel through the atria, stimulating them to contract and push blood into the ventricles. The impulses then pass through the atrioventricular (AV) node, slowing down slightly to allow the ventricles to fill with blood. Finally, they travel down the bundle of His and its branches, known as Purkinje fibers, to trigger the powerful ventricular contractions, pushing blood out to the lungs and the rest of the body. This intricate system ensures the heart beats rhythmically and efficiently, pumping blood throughout the circulatory system to sustain life.
 
-              
 
-            </View>
-          )}
+
+
+</Text>
+  </View>
+)}
+
           {this.state.results === "Brain" && (
             <View>
-              <Text style={{ fontWeight: "bold", fontSize: 17, marginBottom: 10, marginTop: 10 }}>
+              <Text style={{ fontWeight: "bold", fontSize: 17, marginBottom: 10, marginHorizontal:30,marginTop: 10 }}>
                 Brain Longitudinal Appearance
               </Text>
               <Image source={require("../assets/BL.png")} style={styles.hdiamge} />
-              <Text style={{ fontWeight: "bold", fontSize: 17, marginBottom: 10, marginTop: 10}}>
+              <Text style={{ fontSize: 14, lineHeight: 20, marginLeft: 25, marginRight: 25, marginTop: 10 }}>
+              The longitudinal appearance of the brain reveals a complex and intricately structured organ. It is divided into two hemispheres, the left and right, each responsible for a variety of cognitive functions. The outer layer, known as the cerebral cortex, is folded into numerous convolutions and fissures, which increase the surface area for processing information. Beneath the surface, the brain is organized into distinct regions, including the frontal lobe, responsible for higher-order thinking and decision-making; the temporal lobe, involved in processing sensory input and language; the parietal lobe, responsible for sensory perception; and the occipital lobe, dedicated to visual processing. Connecting these regions is a complex network of white matter tracts that facilitate communication between different areas of the brain. The brain's longitudinal appearance reflects its remarkable complexity and its central role in governing a wide range of bodily functions and cognitive processes.</Text>
+              <Text style={{ fontWeight: "bold", fontSize: 17, marginBottom: 10,marginHorizontal:30, marginTop: 10}}>
                 Brain Cerebral Cortex
               </Text>
               <Image source={require("../assets/CC.png")} style={styles.hdiamge} />
+              <Text style={{ fontSize: 14, lineHeight: 20, marginLeft: 25, marginRight: 25, marginTop: 10 }}>
+              The cerebral cortex, the brain's outermost layer, is a marvel of neural architecture. It encompasses about two-thirds of the brain's mass and is responsible for higher cognitive functions, including thinking, perception, memory, and voluntary muscle movement. This remarkable structure is divided into distinct regions, each with specialized functions. The frontal lobe is involved in decision-making and planning, the parietal lobe processes sensory information, the temporal lobe is essential for memory and language, and the occipital lobe primarily handles visual processing. The cerebral cortex's intricate network of neurons and its incredible ability to adapt and learn underpin our capacity for complex thoughts and behaviors, making it a cornerstone of human intelligence.</Text>
               </View>
           )}
 
@@ -312,7 +326,7 @@ const styles = StyleSheet.create({
               height: 250,
               marginBottom: 10,
               marginTop: 10,
-              borderRadius: 14,
+              borderRadius: 14,marginHorizontal:30,
   },
   description2: {
     fontSize: 16,
