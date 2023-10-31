@@ -97,7 +97,6 @@ export default class HumanBodyParts extends React.Component {
                   res.data.bodyparts + " || Accuracy: " + res.data.accuracy,
                 resultTxt3: res.data.text_data,
               });
-
               if (!res.data.error) {
                 this.showSuccessBottomSheet();
               } else {
