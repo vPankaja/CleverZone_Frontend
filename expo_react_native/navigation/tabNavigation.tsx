@@ -3,6 +3,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { stackNames } from '../constants/navConsts/stackNames';
 import HomeStack from './stacks/homeStack';
 import Ionicons from 'react-native-vector-icons/Ionicons'; // Import an icon library
+import ChatNew from '../components/ChatNew';
+import Chat from '../components/Chat';
 
 const Tab = createBottomTabNavigator();
 
@@ -30,6 +32,8 @@ const Tabs = () => {
             iconName = 'log-out';
           }else if (route.name===stackNames.SETTINGS){
             iconName = 'settings';
+          }else if (route.name===stackNames.CHATBOT){
+            iconName='chatbubbles';
           }
 
           // Return the icon component
@@ -53,7 +57,7 @@ const Tabs = () => {
       />
             <Tab.Screen
         name={stackNames.CHATBOT}
-        component={HomeStack}
+        component={Chat}
         options={{
           headerShown: false,
         }}
